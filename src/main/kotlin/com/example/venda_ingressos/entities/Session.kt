@@ -14,6 +14,6 @@ data class Session(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
     val name: String,
-    val quantityTickets: Int,
+    var quantityTickets: Int,
     val datePresentation: LocalDate
 )
