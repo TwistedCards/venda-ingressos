@@ -16,4 +16,8 @@ class SessionService(
         return repository.save(mapper.toEntity(sessionDto))
     }
 
+    fun getAll(): List<Session> {
+        return repository.findAll()
+    }
+
 }
