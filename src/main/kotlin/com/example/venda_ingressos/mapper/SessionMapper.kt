@@ -2,13 +2,11 @@ package com.example.venda_ingressos.mapper
 
 import com.example.venda_ingressos.dto.SessionDto
 import com.example.venda_ingressos.entities.Session
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-
-
-@Service
+@Component
 class SessionMapper {
 
     fun toEntity(dto: SessionDto): Session {
