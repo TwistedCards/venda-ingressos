@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.math.BigDecimal
 import java.util.*
@@ -13,8 +14,9 @@ data class Sale(
     // todo analisar dps se precisa mesmo dessa variavel
     val nameOfSession: String,
 
-    // inserir a classe Client
-//    val client: String,
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sale", cascade = [CascadeType.ALL])
+    val clients: MutableList<Client> = mutableListOf(),
 
     val numberOfTickets: Int,
     val totalValue: BigDecimal,
@@ -22,5 +24,5 @@ data class Sale(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "session_id")
-    val session: Session // todo retirar o null dps
+    val session: Session
 )
