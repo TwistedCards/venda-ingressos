@@ -18,21 +18,21 @@ class SaleService(
 
     @Transactional
     fun generateSale(saleDto: SaleDto): Sale {
-        val totalValue = BigDecimal.valueOf(500)
         val sessionEntity = sessionRepository.findByName(saleDto.nameSession)
 
+        // TODO mais pra frente fazer um tratamento de erros personalizado para os throw
         if (sessionEntity.quantityTickets == 0 || saleDto.numberOfTickets > sessionEntity.quantityTickets) {
             throw Exception("Não tem mais ingressos suficientes")
         }
 
-        if(saleDto.clients.size != saleDto.numberOfTickets) {
+        if (saleDto.clients.size != saleDto.numberOfTickets) {
             throw Exception("O numero de clientes e o numero de ingressos comprados não batem.")
         }
 
         sessionEntity.quantityTickets -= saleDto.numberOfTickets
         sessionRepository.save(sessionEntity)
 
-        val entity = generateSaleEntity(sessionEntity, saleDto, totalValue)
+        val entity = generateSaleEntity(sessionEntity, saleDto, sessionEntity.valueOfTickets)
         repository.save(entity)
 
         clientService.saveClient(saleDto, entity)
