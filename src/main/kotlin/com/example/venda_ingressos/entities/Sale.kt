@@ -11,7 +11,6 @@ data class Sale(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
-    // todo analisar dps se precisa mesmo dessa variavel
     val nameOfSession: String,
 
     @JsonIgnore
@@ -19,7 +18,9 @@ data class Sale(
     val clients: MutableList<Client> = mutableListOf(),
 
     val numberOfTickets: Int,
+
     val totalValue: BigDecimal,
+
     var status: String? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)

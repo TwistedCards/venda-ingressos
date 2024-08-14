@@ -1,13 +1,11 @@
 package com.example.venda_ingressos.kafka
 
-import com.example.venda_ingressos.dto.SaleDTO
+import com.example.venda_ingressos.dto.SaleDto
 import com.example.venda_ingressos.entities.Sale
 import com.example.venda_ingressos.service.SaleService
-import jakarta.transaction.Transactional
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Service
 
 @Component
 class Producer(
@@ -15,7 +13,7 @@ class Producer(
     val producerConfig: ProducerConfig
 ) {
 
-    fun sendMessage(saleDTO: SaleDTO) {
+    fun sendMessage(saleDTO: SaleDto): Sale {
         try {
             val producer = KafkaProducer<String, Sale>(producerConfig.config())
 
@@ -24,6 +22,7 @@ class Producer(
 
             producer.send(record)
             Thread.sleep(200)
+            return sale
         } catch (e: Exception) {
             throw Exception("Error: $e")
         }

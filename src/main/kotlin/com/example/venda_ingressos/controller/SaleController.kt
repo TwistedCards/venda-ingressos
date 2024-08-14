@@ -1,6 +1,6 @@
 package com.example.venda_ingressos.controller
 
-import com.example.venda_ingressos.dto.SaleDTO
+import com.example.venda_ingressos.dto.SaleDto
 import com.example.venda_ingressos.entities.Sale
 import com.example.venda_ingressos.kafka.Producer
 import com.example.venda_ingressos.service.SaleService
@@ -15,9 +15,8 @@ class SaleController(
 ) {
 
     @PostMapping
-    // TODO retirar esse ResponseStatus e colocar no return ()
     @ResponseStatus(value = HttpStatus.OK)
-    fun saleProcess(@RequestBody saleDTO: SaleDTO) {
+    fun saleProcess(@RequestBody saleDTO: SaleDto): Sale {
         return producer.sendMessage(saleDTO)
     }
 
