@@ -1,9 +1,8 @@
 package com.example.venda_ingressos.service
 
-import com.example.venda_ingressos.dto.SaleDTO
-import com.example.venda_ingressos.entities.Client
+import com.example.venda_ingressos.dto.SaleDto
 import com.example.venda_ingressos.entities.Sale
-import com.example.venda_ingressos.repository.ClientRepository
+import com.example.venda_ingressos.entities.Session
 import com.example.venda_ingressos.repository.SaleRepository
 import com.example.venda_ingressos.repository.SessionRepository
 import jakarta.transaction.Transactional
@@ -18,35 +17,40 @@ class SaleService(
 ) {
 
     @Transactional
-    fun generateSale(saleDTO: SaleDTO): Sale {
+    fun generateSale(saleDto: SaleDto): Sale {
         val totalValue = BigDecimal.valueOf(500)
-        val sessionEntity = sessionRepository.findByName(saleDTO.nameSession)
+        val sessionEntity = sessionRepository.findByName(saleDto.nameSession)
 
-        // todo Melhorar isso mais pra frente
-        if (sessionEntity.quantityTickets == 0 || saleDTO.numberOfTickets > sessionEntity.quantityTickets) {
+        if (sessionEntity.quantityTickets == 0 || saleDto.numberOfTickets > sessionEntity.quantityTickets) {
             throw Exception("Não tem mais ingressos suficientes")
         }
 
-        sessionEntity.quantityTickets -= saleDTO.numberOfTickets
+        if(saleDto.clients.size != saleDto.numberOfTickets) {
+            throw Exception("O numero de clientes e o numero de ingressos comprados não batem.")
+        }
 
+        sessionEntity.quantityTickets -= saleDto.numberOfTickets
         sessionRepository.save(sessionEntity)
 
-        val saleEntity = Sale(
+        val entity = generateSaleEntity(sessionEntity, saleDto, totalValue)
+        repository.save(entity)
+
+        clientService.saveClient(saleDto, entity)
+
+        return entity
+    }
+
+    fun getAll(): List<Sale> {
+        return repository.findAll()
+    }
+
+    private fun generateSaleEntity(sessionEntity: Session, saleDTO: SaleDto, totalValue: BigDecimal): Sale {
+        return Sale(
             nameOfSession = sessionEntity.name,
             numberOfTickets = saleDTO.numberOfTickets,
             totalValue = totalValue.multiply(BigDecimal.valueOf(saleDTO.numberOfTickets.toLong())),
             session = sessionEntity
         )
-
-        repository.save(saleEntity)
-
-        clientService.saveClient(saleDTO, saleEntity)
-
-        return saleEntity
-    }
-
-    fun getAll(): List<Sale> {
-        return repository.findAll()
     }
 
 }
