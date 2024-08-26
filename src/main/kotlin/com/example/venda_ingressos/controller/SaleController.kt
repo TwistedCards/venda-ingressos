@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/sale", consumes = ["application/json"])
+@RequestMapping("/sales", consumes = ["application/json"])
 class SaleController(
     val service: SaleService,
     val producer: Producer

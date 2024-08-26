@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/client", consumes = ["application/json"])
+@RequestMapping("/clients", consumes = ["application/json"])
 class ClientController(
     private val service: ClientService
 ) {
