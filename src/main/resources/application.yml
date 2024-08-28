@@ -5,6 +5,16 @@ spring:
   application:
     name: venda-ingressos
 
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+  app:
+    external:
+      topic:
+        name: venda-ingressos-teste
+
   datasource:
     url: jdbc:h2:mem:banco
     driverClassName: org.h2.Driver

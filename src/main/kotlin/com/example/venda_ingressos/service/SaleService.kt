@@ -1,11 +1,15 @@
 package com.example.venda_ingressos.service
 
-import com.example.venda_ingressos.dto.SaleDto
+import com.example.venda_ingressos.controller.request.paged.PagedRequest
+import com.example.venda_ingressos.controller.request.SaleRequest
+import com.example.venda_ingressos.controller.response.SaleResponse
 import com.example.venda_ingressos.entities.Sale
 import com.example.venda_ingressos.entities.Session
+import com.example.venda_ingressos.mapper.SaleMapper
 import com.example.venda_ingressos.repository.SaleRepository
 import com.example.venda_ingressos.repository.SessionRepository
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 
@@ -13,42 +17,44 @@ import java.math.BigDecimal
 class SaleService(
     val repository: SaleRepository,
     val sessionRepository: SessionRepository,
-    val clientService: ClientService
+    val clientService: ClientService,
+    val mapper: SaleMapper
 ) {
 
     @Transactional
-    fun generateSale(saleDto: SaleDto): Sale {
-        val sessionEntity = sessionRepository.findByName(saleDto.nameSession)
+    fun generateSale(request: SaleRequest): Sale {
+        val sessionEntity = sessionRepository.findByName(request.nameOfSession)
 
         // TODO mais pra frente fazer um tratamento de erros personalizado para os throw
-        if (sessionEntity.quantityTickets == 0 || saleDto.numberOfTickets > sessionEntity.quantityTickets) {
+        if (sessionEntity.quantityTickets == 0 || request.numberOfTickets > sessionEntity.quantityTickets) {
             throw Exception("Não tem mais ingressos suficientes")
         }
 
-        if (saleDto.clients.size != saleDto.numberOfTickets) {
+        if (request.clients!!.size != request.numberOfTickets) {
             throw Exception("O numero de clientes e o numero de ingressos comprados não batem.")
         }
 
-        sessionEntity.quantityTickets -= saleDto.numberOfTickets
+        sessionEntity.quantityTickets -= request.numberOfTickets
+        sessionEntity.valueOfTickets = BigDecimal(500)
         sessionRepository.save(sessionEntity)
 
-        val entity = generateSaleEntity(sessionEntity, saleDto, sessionEntity.valueOfTickets)
+        val entity = generateSaleEntity(sessionEntity, request, sessionEntity.valueOfTickets!!)
         repository.save(entity)
 
-        clientService.saveClient(saleDto, entity)
+        clientService.saveClientBySale(request, entity)
 
         return entity
     }
 
-    fun getAll(): List<Sale> {
-        return repository.findAll()
+    fun findAll(pagedRequest: PagedRequest): Page<SaleResponse> {
+        return repository.findAll(pagedRequest.pageable()).map { mapper.entityToResponse(it) }
     }
 
-    private fun generateSaleEntity(sessionEntity: Session, saleDTO: SaleDto, totalValue: BigDecimal): Sale {
+    private fun generateSaleEntity(sessionEntity: Session, request: SaleRequest, totalValue: BigDecimal): Sale {
         return Sale(
             nameOfSession = sessionEntity.name,
-            numberOfTickets = saleDTO.numberOfTickets,
-            totalValue = totalValue.multiply(BigDecimal.valueOf(saleDTO.numberOfTickets.toLong())),
+            numberOfTickets = request.numberOfTickets,
+            totalValue = totalValue.multiply(BigDecimal.valueOf(request.numberOfTickets.toLong())),
             session = sessionEntity
         )
     }

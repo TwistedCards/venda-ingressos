@@ -1,24 +1,38 @@
 package com.example.venda_ingressos.controller
 
-import com.example.venda_ingressos.dto.SessionDto
-import com.example.venda_ingressos.entities.Session
+import com.example.venda_ingressos.controller.request.paged.PagedRequest
+import com.example.venda_ingressos.controller.request.SessionRequest
+import com.example.venda_ingressos.controller.response.paged.SessionPagedResponse
+import com.example.venda_ingressos.controller.response.SessionResponse
 import com.example.venda_ingressos.service.SessionService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/sessions", consumes = ["application/json"])
+@RequestMapping("/sessions")
 class SessionController(
     private val service: SessionService
 ) {
 
     @PostMapping
-    fun save(@RequestBody sessionDto: SessionDto): Session {
-        return service.save(sessionDto)
+    fun save(@RequestBody request: SessionRequest): ResponseEntity<SessionResponse> {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(request))
     }
 
     @GetMapping
-    fun getAll(): List<Session> {
-        return service.getAll()
+    fun getAll(
+        @RequestParam(defaultValue = "10") size: Int?,
+        @RequestParam(defaultValue = "0") offset: Int?
+    ): ResponseEntity<SessionPagedResponse> {
+        val pagedRequest = PagedRequest(
+            size = size!!,
+            offset = offset!!
+        )
+
+        val page = service.findAll(pagedRequest)
+
+        return ResponseEntity.status(HttpStatus.OK).body(SessionPagedResponse(page, offset))
     }
 
 }

@@ -1,9 +1,6 @@
 package com.example.venda_ingressos.entities
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.util.*
@@ -14,6 +11,7 @@ data class Session(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
+    @Column(unique = true)
     val name: String,
 
     var quantityTickets: Int,
@@ -21,5 +19,5 @@ data class Session(
     val datePresentation: LocalDate,
 
     // TODO mais pra frente fazer ter mais de 1 valor, dependendo do assento selecionado
-    var valueOfTickets: BigDecimal
+    var valueOfTickets: BigDecimal? = null
 )

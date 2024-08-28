@@ -1,8 +1,8 @@
-package com.example.venda_ingressos.dto
+package com.example.venda_ingressos.controller.request
 
 import java.math.BigDecimal
 
-data class SessionDto(
+class SessionRequest (
     val name: String,
     val quantityTickets: Int,
     val datePresentation: String,
