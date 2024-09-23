@@ -1,6 +1,5 @@
 package com.example.venda_ingressos.kafka
 
-import com.example.venda_ingressos.entities.Sale
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
