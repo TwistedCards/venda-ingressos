@@ -28,6 +28,9 @@ dependencies {
 	implementation("org.slf4j:slf4j-api:2.0.7")
 	implementation("org.apache.kafka:kafka-clients:3.7.0")
 	implementation("com.fasterxml.jackson.core:jackson-databind:2.17.1")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+
+
 
 	runtimeOnly("com.h2database:h2")
 

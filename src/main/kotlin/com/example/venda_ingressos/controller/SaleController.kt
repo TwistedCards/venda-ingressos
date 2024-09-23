@@ -1,20 +1,45 @@
 package com.example.venda_ingressos.controller
 
-import com.example.venda_ingressos.dto.SaleDTO
+import com.example.venda_ingressos.controller.request.paged.PagedRequest
+import com.example.venda_ingressos.controller.request.SaleRequest
+import com.example.venda_ingressos.controller.response.paged.SalePagedResponse
+import com.example.venda_ingressos.controller.response.SaleResponse
 import com.example.venda_ingressos.kafka.Producer
+import com.example.venda_ingressos.service.SaleService
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/kafka", consumes = ["application/json"])
+@RequestMapping("/sales")
 class SaleController(
-    private val process: Producer
+    val service: SaleService,
+    val producer: Producer
 ) {
 
-    @PostMapping("/producer")
-    @ResponseStatus(value = HttpStatus.OK)
-    fun saleProcess(@RequestBody saleDTO: SaleDTO) {
-        process.sendMensagens(saleDTO.client, saleDTO.numberOfTickets)
+    @PostMapping("/teste")
+    fun saleProcess(){
+        producer.sendMessageTest()
+    }
+
+    @PostMapping
+    fun saleProcess(@RequestBody request: SaleRequest): ResponseEntity<SaleResponse> {
+        return ResponseEntity.status(HttpStatus.OK).body(producer.sendMessage(request))
+    }
+
+    @GetMapping
+    fun getAllSales(
+        @RequestParam(defaultValue = "10") size: Int?,
+        @RequestParam(defaultValue = "0") offset: Int?
+    ): ResponseEntity<SalePagedResponse> {
+        val pagedRequest = PagedRequest(
+            size = size!!,
+            offset = offset!!
+        )
+
+        val page = service.findAll(pagedRequest)
+
+        return ResponseEntity.status(HttpStatus.OK).body(SalePagedResponse(page, offset))
     }
 
 }
