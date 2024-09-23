@@ -10,6 +10,7 @@ class ClientMapper {
 
     fun entityToResponse(entity: Client): ClientResponse {
         return ClientResponse(
+            id = entity.id!!,
             name = entity.name,
             cpf = entity.cpf
         )

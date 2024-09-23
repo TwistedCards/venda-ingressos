@@ -1,12 +1,13 @@
 package com.example.venda_ingressos.entities
 
 import jakarta.persistence.*
+import java.util.*
 
 @Entity
 class Cinema(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int? = null,
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    var id: UUID? = null,
 
     var phone: String,
 
