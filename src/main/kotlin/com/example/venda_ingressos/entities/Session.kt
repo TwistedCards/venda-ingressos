@@ -1,7 +1,6 @@
 package com.example.venda_ingressos.entities
 
 import jakarta.persistence.*
-import java.math.BigDecimal
 import java.time.LocalDate
 import java.util.*
 
@@ -14,10 +13,8 @@ data class Session(
     @Column(unique = true)
     val name: String,
 
-    var quantityTickets: Int,
-
     val datePresentation: LocalDate,
 
-    // TODO mais pra frente fazer ter mais de 1 valor, dependendo do assento selecionado
-    var valueOfTickets: BigDecimal? = null
+    @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
+    var priceTickets: MutableList<PriceTicket> = mutableListOf()
 )

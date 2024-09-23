@@ -1,6 +1,7 @@
 package com.example.venda_ingressos.mapper
 
 import com.example.venda_ingressos.controller.request.SessionRequest
+import com.example.venda_ingressos.controller.response.PriceTicketResponse
 import com.example.venda_ingressos.controller.response.SessionResponse
 import com.example.venda_ingressos.dto.SessionDto
 import com.example.venda_ingressos.entities.Session
@@ -16,36 +17,40 @@ class SessionMapper {
     fun requestToEntity(request: SessionRequest): Session {
         return Session(
             name = request.name,
-            quantityTickets = request.quantityTickets,
-            datePresentation = LocalDate.parse(request.datePresentation, formatter),
-            valueOfTickets = request.valueOfTickets
+            datePresentation = LocalDate.parse(request.datePresentation, formatter)
         )
     }
 
     fun entityToResponse(entity: Session): SessionResponse {
-        return SessionResponse(
+        val sessionResponse = SessionResponse(
             name = entity.name,
-            quantityTickets = entity.quantityTickets,
-            datePresentation = entity.datePresentation.format(formatter),
-            valueOfTickets = entity.valueOfTickets
+            datePresentation = entity.datePresentation.format(formatter)
         )
+
+        entity.priceTickets.forEach {
+            sessionResponse.priceTickets.add(
+                PriceTicketResponse(
+                    price = it.price!!,
+                    type = it.type!!,
+                    quantityTickets = it.quantityTickets
+                )
+            )
+        }
+
+        return sessionResponse
     }
 
     fun dtoToEntity(dto: SessionDto): Session {
         return Session(
             name = dto.name,
-            quantityTickets = dto.quantityTickets,
-            datePresentation = LocalDate.parse(dto.datePresentation, formatter),
-            valueOfTickets = dto.valueOfTickets
+            datePresentation = LocalDate.parse(dto.datePresentation, formatter)
         )
     }
 
     fun entityToDto(entity: Session): SessionDto {
         return SessionDto(
             name = entity.name,
-            quantityTickets = entity.quantityTickets,
-            datePresentation = entity.datePresentation.format(formatter),
-            valueOfTickets = entity.valueOfTickets!!
+            datePresentation = entity.datePresentation.format(formatter)
         )
     }
 

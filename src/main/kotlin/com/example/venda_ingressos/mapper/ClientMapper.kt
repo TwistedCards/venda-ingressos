@@ -19,7 +19,6 @@ class ClientMapper(
             name = entity.name,
             cpf = entity.cpf,
             sale = SaleDto(
-                nameOfSession = entity.sale.nameOfSession,
                 numberOfTickets = entity.sale.numberOfTickets,
                 totalValue = entity.sale.totalValue,
                 status = entity.sale.status

@@ -8,11 +8,10 @@ import com.example.venda_ingressos.entities.Session
 import org.springframework.stereotype.Component
 
 @Component
-class SaleMapper{
+class SaleMapper {
 
     fun dtoToEntity(dto: SaleDto, session: Session? = null): Sale {
         return Sale(
-            nameOfSession = dto.nameOfSession,
             numberOfTickets = dto.numberOfTickets,
             totalValue = dto.totalValue!!,
             status = dto.status,
@@ -22,7 +21,6 @@ class SaleMapper{
 
     fun entityToDto(entity: Sale): SaleDto {
         return SaleDto(
-            nameOfSession = entity.nameOfSession,
             numberOfTickets = entity.numberOfTickets,
             totalValue = entity.totalValue,
             status = entity.status
@@ -31,8 +29,8 @@ class SaleMapper{
 
     fun entityToResponse(entity: Sale): SaleResponse {
         return SaleResponse(
-            nameOfSession = entity.nameOfSession,
-            clients = entity.clients.map { ClientDto(name = it.name, cpf = it.cpf) }.toMutableList(),
+            nameOfSession = entity.session!!.name,
+            clients = ClientDto(name = entity.client!!.name, cpf = entity.client.cpf),
             numberOfTickets = entity.numberOfTickets
         )
     }

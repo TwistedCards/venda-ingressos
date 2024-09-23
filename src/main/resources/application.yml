@@ -7,8 +7,9 @@ spring:
 
   kafka:
     producer:
+      bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
   app:
     external:
@@ -18,8 +19,8 @@ spring:
   datasource:
     url: jdbc:h2:mem:banco
     driverClassName: org.h2.Driver
-    username:
-    password:
+    username: adm
+    password: adm
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true

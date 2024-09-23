@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.util.*
 
@@ -13,7 +14,6 @@ data class Client(
 
     val cpf: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sale_id", nullable = false)
+    @OneToOne(mappedBy = "client", fetch = FetchType.LAZY)
     var sale: Sale
 )

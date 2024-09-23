@@ -17,6 +17,11 @@ class SaleController(
     val producer: Producer
 ) {
 
+    @PostMapping("/teste")
+    fun saleProcess(){
+        producer.sendMessageTest()
+    }
+
     @PostMapping
     fun saleProcess(@RequestBody request: SaleRequest): ResponseEntity<SaleResponse> {
         return ResponseEntity.status(HttpStatus.OK).body(producer.sendMessage(request))

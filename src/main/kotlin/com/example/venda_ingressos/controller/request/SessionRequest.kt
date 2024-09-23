@@ -6,5 +6,6 @@ class SessionRequest (
     val name: String,
     val quantityTickets: Int,
     val datePresentation: String,
-    val valueOfTickets: BigDecimal? = null
+    val valueOfTickets: BigDecimal? = null,
+    val prices: List<PriceRequest> = mutableListOf()
 )

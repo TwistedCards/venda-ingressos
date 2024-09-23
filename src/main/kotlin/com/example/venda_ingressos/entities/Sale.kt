@@ -11,11 +11,10 @@ data class Sale(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
-    val nameOfSession: String,
-
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sale", cascade = [CascadeType.ALL])
-    val clients: MutableList<Client> = mutableListOf(),
+    @OneToOne(cascade = [CascadeType.ALL])
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    val client: Client? = null,
 
     val numberOfTickets: Int,
 
@@ -25,5 +24,5 @@ data class Sale(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "session_id")
-    val session: Session
+    val session: Session? = null
 )
