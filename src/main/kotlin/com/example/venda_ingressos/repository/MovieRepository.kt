@@ -1,8 +1,8 @@
 package com.example.venda_ingressos.repository
 
-import com.example.venda_ingressos.entities.Client
+import com.example.venda_ingressos.entities.Movie
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
-interface ClientRepository : JpaRepository<Client, UUID> {
+interface MovieRepository : JpaRepository<Movie, UUID> {
 }
