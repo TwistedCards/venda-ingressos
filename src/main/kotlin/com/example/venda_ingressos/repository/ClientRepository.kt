@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
 interface ClientRepository : JpaRepository<Client, UUID> {
+
+    fun findByCpf(cpf: String): Client
+
 }

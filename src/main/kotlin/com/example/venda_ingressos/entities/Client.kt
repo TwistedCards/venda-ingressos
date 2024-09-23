@@ -9,8 +9,8 @@ data class Client(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
-    val name: String,
+    var name: String,
 
     @Column(unique = true)
-    val cpf: String
+    var cpf: String
 )
