@@ -13,13 +13,15 @@ class RoomMovieMapper {
     fun entityToResponse(entity: RoomMovie): RoomMovieResponse {
         return RoomMovieResponse(
             id = entity.id!!,
-            movieTime = entity.movieTime
+            movieStartTime = entity.movieStartTime,
+            movieEndTime = entity.movieEndTime
         )
     }
 
     fun requestToEntity(request: RoomMovieRequest, movieEntity: Movie, roomEntity: Room): RoomMovie {
         return RoomMovie(
-            movieTime = request.movieTime,
+            movieStartTime = request.movieStartTime,
+            movieEndTime = request.movieEndTime,
             movie = movieEntity,
             room = roomEntity
         )

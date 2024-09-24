@@ -14,5 +14,5 @@ class Cinema(
     var name: String,
 
     @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
-    var rooms: MutableList<Room> = mutableListOf()
+    var rooms: MutableList<Room>? = null
 )

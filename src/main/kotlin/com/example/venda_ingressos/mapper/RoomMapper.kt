@@ -4,6 +4,7 @@ import com.example.venda_ingressos.controller.request.CinemaRequest
 import com.example.venda_ingressos.controller.request.RoomRequest
 import com.example.venda_ingressos.controller.response.CinemaResponse
 import com.example.venda_ingressos.controller.response.ClientResponse
+import com.example.venda_ingressos.controller.response.RoomMovieResponse
 import com.example.venda_ingressos.controller.response.RoomResponse
 import com.example.venda_ingressos.entities.Cinema
 import com.example.venda_ingressos.entities.Client
@@ -18,11 +19,13 @@ class RoomMapper {
             id = entity.id!!,
             totalCapacity = entity.totalCapacity,
             roomName = entity.roomName,
-            cinema = CinemaResponse(
-                id = entity.cinema.id!!,
-                phone = entity.cinema.phone,
-                name = entity.cinema.name
-            )
+            roomMovies = entity.roomMovies?.map {
+                RoomMovieResponse(
+                    id = it.id!!,
+                    movieStartTime = it.movieStartTime,
+                    movieEndTime = it.movieEndTime
+                )
+            }?.toMutableList()
         )
     }
 

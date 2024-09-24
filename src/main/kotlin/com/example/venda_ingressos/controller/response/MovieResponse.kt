@@ -8,5 +8,6 @@ class MovieResponse(
     val name: String,
     val startDate: LocalDate,
     val endDate: LocalDate,
-    val synopsis: String
+    val synopsis: String,
+    val roomMovies: MutableList<RoomMovieResponse>? = null
 )

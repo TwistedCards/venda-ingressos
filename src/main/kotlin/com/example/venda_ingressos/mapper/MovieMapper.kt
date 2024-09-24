@@ -1,12 +1,8 @@
 package com.example.venda_ingressos.mapper
 
-import com.example.venda_ingressos.controller.request.CinemaRequest
 import com.example.venda_ingressos.controller.request.MovieRequest
-import com.example.venda_ingressos.controller.response.CinemaResponse
-import com.example.venda_ingressos.controller.response.ClientResponse
 import com.example.venda_ingressos.controller.response.MovieResponse
-import com.example.venda_ingressos.entities.Cinema
-import com.example.venda_ingressos.entities.Client
+import com.example.venda_ingressos.controller.response.RoomMovieResponse
 import com.example.venda_ingressos.entities.Movie
 import org.springframework.stereotype.Component
 
@@ -19,7 +15,14 @@ class MovieMapper {
             name = entity.name,
             startDate = entity.startDate,
             endDate = entity.endDate,
-            synopsis = entity.synopsis
+            synopsis = entity.synopsis,
+            roomMovies = entity.roomMovies?.map {
+                RoomMovieResponse(
+                    id = it.id!!,
+                    movieStartTime = it.movieStartTime,
+                    movieEndTime = it.movieEndTime
+                )
+            }?.toMutableList()
         )
     }
 

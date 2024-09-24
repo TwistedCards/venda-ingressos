@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-@RequestMapping("/rooms")
+@RequestMapping("/movies")
 class MovieController(
     private val service: MovieService
 ) {

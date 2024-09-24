@@ -11,8 +11,9 @@ data class RoomMovie(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
-    @Column(unique = true)
-    var movieTime: LocalDateTime,
+    var movieStartTime: LocalDateTime,
+
+    var movieEndTime: LocalDateTime,
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

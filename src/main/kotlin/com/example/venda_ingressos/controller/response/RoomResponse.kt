@@ -6,5 +6,5 @@ class RoomResponse(
     val id: UUID,
     val totalCapacity: Int,
     val roomName: String,
-    val cinema: CinemaResponse? = null
+    val roomMovies: MutableList<RoomMovieResponse>? = null
 )
