@@ -17,10 +17,14 @@ class MovieMapper {
             endDate = entity.endDate,
             synopsis = entity.synopsis,
             roomMovies = entity.roomMovies?.map {
+                val startTime = "${it.movieStartTime.hour}:${it.movieStartTime.minute}"
+                val endTime = "${it.movieEndTime.hour}:${it.movieEndTime.minute}"
+
                 RoomMovieResponse(
                     id = it.id!!,
-                    movieStartTime = it.movieStartTime,
-                    movieEndTime = it.movieEndTime
+                    date = it.movieStartTime.toLocalDate(),
+                    startTime = startTime,
+                    endTime = endTime,
                 )
             }?.toMutableList()
         )

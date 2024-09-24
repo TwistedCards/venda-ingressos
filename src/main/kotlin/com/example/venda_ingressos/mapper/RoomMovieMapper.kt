@@ -11,10 +11,14 @@ import org.springframework.stereotype.Component
 class RoomMovieMapper {
 
     fun entityToResponse(entity: RoomMovie): RoomMovieResponse {
+        val startTime = "${entity.movieStartTime.hour}:${entity.movieStartTime.minute}"
+        val endTime = "${entity.movieEndTime.hour}:${entity.movieEndTime.minute}"
+
         return RoomMovieResponse(
             id = entity.id!!,
-            movieStartTime = entity.movieStartTime,
-            movieEndTime = entity.movieEndTime
+            date = entity.movieStartTime.toLocalDate(),
+            startTime = startTime,
+            endTime = endTime,
         )
     }
 

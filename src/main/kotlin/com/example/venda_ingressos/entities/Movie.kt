@@ -10,7 +10,6 @@ data class Movie(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
-    @Column(unique = true)
     var name: String,
 
     var startDate: LocalDate,

@@ -9,6 +9,7 @@ class Cinema(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
+    @Column(unique = true)
     var phone: String,
 
     var name: String,
