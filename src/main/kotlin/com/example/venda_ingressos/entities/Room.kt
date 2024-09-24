@@ -10,7 +10,6 @@ data class Room(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
-    @Column(unique = true)
     var totalCapacity: Int,
 
     var roomName: String,
