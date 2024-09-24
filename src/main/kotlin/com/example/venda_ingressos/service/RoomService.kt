@@ -23,7 +23,9 @@ class RoomService(
     }
 
     fun save(request: RoomRequest): RoomResponse {
-        val entityCinema = cinemaRepository.findById(request.idCinema).get()
+        val entityCinema = cinemaRepository.findById(request.idCinema)
+            .orElseThrow { throw NullPointerException("m=save, msg=Cinema with id ${request.idCinema} not found") }
+
         val roomEntity = repository.save(mapper.requestToEntity(request, entityCinema))
 
         return mapper.entityToResponse(roomEntity)
