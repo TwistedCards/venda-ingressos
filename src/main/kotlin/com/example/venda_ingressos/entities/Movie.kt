@@ -18,7 +18,7 @@ data class Movie(
     var endDate: LocalDate,
 
     @Lob
-    var sinopse: String,
+    var synopsis: String,
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
     var roomMovies: MutableList<RoomMovie> = mutableListOf()

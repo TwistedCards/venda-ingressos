@@ -14,14 +14,8 @@ import java.util.UUID
 @RestController
 @RequestMapping("/clients")
 class ClientController(
-//    val producer: Producer
     private val service: ClientService
 ) {
-
-//    @PostMapping
-//    fun saleProcess(@RequestBody request: SaleRequest): ResponseEntity<SaleResponse> {
-//        return ResponseEntity.status(HttpStatus.OK).body(producer.sendMessage(request))
-//    }
 
     @PostMapping
     fun save(@RequestBody request: ClientRequest): ResponseEntity<ClientResponse> {
