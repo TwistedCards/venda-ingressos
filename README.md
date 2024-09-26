@@ -185,8 +185,7 @@ Para utilizar o swager, basta utilizar essa url http://localhost:8080/swagger-ui
 | `id`      | `UUID` | **Required**. Numero de cadastro do room_movie |
 
 ## DER
-
-
+![img.png](docs/der.PNG)
 
 ## Installation
 
