@@ -4,13 +4,16 @@ import jakarta.persistence.*
 import java.util.*
 
 @Entity
-data class Client(
+class Cinema(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
+    @Column(unique = true)
+    var phone: String,
+
     var name: String,
 
-    @Column(unique = true)
-    var cpf: String
+    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
+    var rooms: MutableList<Room>? = null
 )

@@ -2,8 +2,9 @@ package com.example.venda_ingressos.controller.response
 
 import java.util.*
 
-class ClientResponse(
+class CinemaResponse(
     val id: UUID,
+    val phone: String,
     val name: String,
-    val cpf: String
+    val rooms: MutableList<RoomResponse>? = null
 )
