@@ -5,6 +5,6 @@ import java.util.*
 class RoomResponse(
     val id: UUID,
     val totalCapacity: Int,
-    val roomName: String,
-    val roomMovies: MutableList<RoomMovieResponse>? = null
+    val roomName: String
+//    val roomMovies: MutableList<RoomMovieResponse>? = null
 )
