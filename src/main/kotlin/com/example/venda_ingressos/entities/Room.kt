@@ -17,8 +17,5 @@ data class Room(
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id", nullable = false)
-    var cinema: Cinema,
-
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-    var roomMovies: MutableList<RoomMovie>? = null
+    var cinema: Cinema
 )
