@@ -2,7 +2,6 @@ package com.example.venda_ingressos.mapper
 
 import com.example.venda_ingressos.controller.request.MovieRequest
 import com.example.venda_ingressos.controller.response.MovieResponse
-import com.example.venda_ingressos.controller.response.RoomMovieResponse
 import com.example.venda_ingressos.entities.Movie
 import org.springframework.stereotype.Component
 
@@ -11,30 +10,23 @@ class MovieMapper {
 
     fun entityToResponse(entity: Movie): MovieResponse {
         return MovieResponse(
-            id = entity.id!!,
-            name = entity.name,
-            startDate = entity.startDate,
-            endDate = entity.endDate,
-            synopsis = entity.synopsis,
-            roomMovies = entity.roomMovies?.map {
-                val startTime = "${it.movieStartTime.hour}:${it.movieStartTime.minute}"
-                val endTime = "${it.movieEndTime.hour}:${it.movieEndTime.minute}"
-
-                RoomMovieResponse(
-                    id = it.id!!,
-                    date = it.movieStartTime.toLocalDate(),
-                    startTime = startTime,
-                    endTime = endTime,
-                )
-            }?.toMutableList()
+            title = entity.title,
+            originalTitle = entity.originalTitle,
+            imgPoster = entity.imgPoster,
+            trailer = entity.trailer,
+            indicativeClassification = entity.indicativeClassification,
+            duration = entity.duration,
+            releaseDate = entity.releaseDate,
+            synopsis = entity.synopsis
         )
     }
 
     fun requestToEntity(request: MovieRequest): Movie {
         return Movie(
-            name = request.name,
-            startDate = request.startDate,
-            endDate = request.endDate,
+            title = request.title,
+            originalTitle = request.originalTitle,
+            indicativeClassification = request.indicativeClassification,
+            releaseDate = request.releaseDate,
             synopsis = request.synopsis
         )
     }
