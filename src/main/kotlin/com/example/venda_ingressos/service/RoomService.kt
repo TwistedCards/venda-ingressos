@@ -22,18 +22,18 @@ class RoomService(
         return repository.findById(id).get()
     }
 
-//    fun save(request: RoomRequest): RoomResponse {
-//        val entityCinema = cinemaRepository.findById(request.idCinema)
-//            .orElseThrow { throw NullPointerException("m=save, msg=Cinema with id ${request.idCinema} not found") }
-//
-//        val roomEntity = repository.save(mapper.requestToEntity(request, entityCinema))
-//
-//        return mapper.entityToResponse(roomEntity)
-//    }
+    fun save(request: RoomRequest): RoomResponse {
+        val entityCinema = cinemaRepository.findById(request.idCinema)
+            .orElseThrow { throw NullPointerException("m=save, msg=Cinema with id ${request.idCinema} not found") }
 
-//    fun findAll(pagedRequest: PagedRequest): Page<RoomResponse> {
-//        return repository.findAll(pagedRequest.pageable()).map { mapper.entityToResponse(it) }
-//    }
+        val roomEntity = repository.save(mapper.requestToEntity(request, entityCinema))
+
+        return mapper.entityToResponse(roomEntity)
+    }
+
+    fun findAll(pagedRequest: PagedRequest): Page<RoomResponse> {
+        return repository.findAll(pagedRequest.pageable()).map { mapper.entityToResponse(it) }
+    }
 
     fun delete(id: UUID) {
         repository.deleteById(id)

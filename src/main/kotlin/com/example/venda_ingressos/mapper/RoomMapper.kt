@@ -13,24 +13,13 @@ import org.springframework.stereotype.Component
 @Component
 class RoomMapper {
 
-//    fun entityToResponse(entity: Room): RoomResponse {
-//        return RoomResponse(
-//            id = entity.id!!,
-//            totalCapacity = entity.totalCapacity,
-//            roomName = entity.roomName,
-//            roomMovies = entity.roomMovies?.map {
-//                val startTime = "${it.movieStartTime.hour}:${it.movieStartTime.minute}"
-//                val endTime = "${it.movieEndTime.hour}:${it.movieEndTime.minute}"
-//
-//                RoomMovieResponse(
-//                    id = it.id!!,
-//                    date = it.movieStartTime.toLocalDate(),
-//                    startTime = startTime,
-//                    endTime = endTime,
-//                )
-//            }?.toMutableList()
-//        )
-//    }
+    fun entityToResponse(entity: Room): RoomResponse {
+        return RoomResponse(
+            id = entity.id!!,
+            totalCapacity = entity.totalCapacity,
+            roomName = entity.roomName
+        )
+    }
 
     fun requestToEntity(request: RoomRequest, cinemaEntity: Cinema): Room {
         return Room(
