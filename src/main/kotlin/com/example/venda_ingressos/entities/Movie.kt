@@ -28,9 +28,9 @@ data class Movie(
     @Lob
     var synopsis: String,
 
-//    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-//    var roomMovies: MutableList<RoomMovie>? = null,
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+    var sessions: MutableList<Session>? = null,
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-    var sessions: MutableList<Session>? = null
+    var seats: MutableList<Seat>? = null
 )

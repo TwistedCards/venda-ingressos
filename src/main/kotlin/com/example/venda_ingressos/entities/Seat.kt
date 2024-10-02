@@ -1,8 +1,14 @@
 package com.example.venda_ingressos.entities
 
 import jakarta.persistence.*
+import java.util.*
 
-class Seat(
+@Entity
+data class Seat(
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    var id: UUID? = null,
+
     var codSeat: String,
 
     @Enumerated(EnumType.STRING)
@@ -10,5 +16,8 @@ class Seat(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id", nullable = false)
-    var movie: Movie
+    var movie: Movie,
+
+    @OneToMany(mappedBy = "seat", fetch = FetchType.LAZY)
+    var seatSessions: MutableList<SeatSession>
 )

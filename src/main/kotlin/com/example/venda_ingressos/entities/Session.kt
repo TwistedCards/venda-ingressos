@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 import java.util.*
 
+@Entity
 class Session(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,5 +16,8 @@ class Session(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id", nullable = false)
-    var movie: Movie
+    var movie: Movie,
+
+    @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
+    var seatSessions: MutableList<SeatSession>
 )

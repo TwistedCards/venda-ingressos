@@ -24,5 +24,4 @@ class RestExceptionHandler: ResponseEntityExceptionHandler() {
         return ResponseEntity(error, HttpStatus.NOT_FOUND)
     }
 
-
 }
