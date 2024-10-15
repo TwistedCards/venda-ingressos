@@ -5,17 +5,21 @@ import jakarta.persistence.*
 import java.util.*
 
 @Entity
-data class Room(
+data class SeatSession(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
-    var totalCapacity: Int,
-
-    var roomName: String,
+    @Enumerated(EnumType.STRING)
+    var status: StatusEnum,
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cinema_id", nullable = false)
-    var cinema: Cinema
+    @JoinColumn(name = "seat_id", nullable = false)
+    var seat: Seat,
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "session_id", nullable = false)
+    var session: Session
 )
