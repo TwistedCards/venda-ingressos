@@ -75,6 +75,7 @@ class MovieServiceTest {
 
         verify(exactly = 1) { repository.save(fakeEntity) }
         verify(exactly = 1) { mapper.requestToEntity(request) }
+        verify(exactly = 1) { mapper.entityToResponse(fakeEntity) }
 
         assertEquals(response, movieSaved)
     }

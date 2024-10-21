@@ -58,10 +58,12 @@ class ClientServiceTest {
         every { repository.save(fakeEntity) } returns fakeEntity
         every { mapper.entityToResponse(fakeEntity) } returns response
 
-        service.save(request)
+        val client = service.save(request)
 
         verify(exactly = 1) { repository.save(fakeEntity) }
         verify(exactly = 1) { mapper.requestToEntity(request) }
+        verify(exactly = 1) { mapper.entityToResponse(fakeEntity) }
+        assertEquals(response, client)
     }
 
     @Test
@@ -102,6 +104,7 @@ class ClientServiceTest {
 
         verify(exactly = 1) { repository.findByCpf(any()) }
         verify(exactly = 1) { repository.save(any()) }
+        verify(exactly = 1) { mapper.entityToResponse(any()) }
         assertEquals(entityEdit.cpf, client.cpf)
         assertEquals(entityEdit.name, client.name)
     }
