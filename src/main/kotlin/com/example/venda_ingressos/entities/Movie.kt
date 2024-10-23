@@ -13,16 +13,20 @@ data class Movie(
 
     var title: String,
 
+    @Column(name="original_title")
     var originalTitle: String,
 
+    @Column(name="img_poster")
     var imgPoster: String? = null,
 
     var trailer: String? = null,
 
+    @Column(name="indicative_classification")
     var indicativeClassification: String? = null,
 
     var duration: LocalDateTime? = null,
 
+    @Column(name = "release_date")
     var releaseDate: LocalDate,
 
     @Lob

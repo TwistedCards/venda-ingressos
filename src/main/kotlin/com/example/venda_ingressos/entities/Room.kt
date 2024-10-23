@@ -10,8 +10,10 @@ data class Room(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
+    @Column(name = "total_capacity")
     var totalCapacity: Int,
 
+    @Column(name = "room_name")
     var roomName: String,
 
     @JsonIgnore

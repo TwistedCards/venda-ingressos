@@ -9,6 +9,7 @@ data class Seat(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
+    @Column(name = "cod_seat")
     var codSeat: String,
 
     @Enumerated(EnumType.STRING)
@@ -19,5 +20,5 @@ data class Seat(
     var movie: Movie,
 
     @OneToMany(mappedBy = "seat", fetch = FetchType.LAZY)
-    var seatSessions: MutableList<SeatSession>
+    var seatSessions: MutableList<SeatSession>? = null
 )

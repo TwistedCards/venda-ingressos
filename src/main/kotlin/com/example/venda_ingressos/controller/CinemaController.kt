@@ -21,7 +21,7 @@ class CinemaController(
 
     @PostMapping
     fun save(@RequestBody request: CinemaRequest): ResponseEntity<CinemaResponse> {
-        return ResponseEntity.status(HttpStatus.OK).body(service.save(request))
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(request))
     }
 
     @GetMapping
@@ -40,6 +40,7 @@ class CinemaController(
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: UUID) {
         service.delete(id)
     }

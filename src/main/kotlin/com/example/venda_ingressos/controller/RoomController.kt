@@ -19,7 +19,7 @@ class RoomController(
 
     @PostMapping
     fun save(@RequestBody request: RoomRequest): ResponseEntity<RoomResponse> {
-        return ResponseEntity.status(HttpStatus.OK).body(service.save(request))
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(request))
     }
 
     @GetMapping
@@ -38,6 +38,7 @@ class RoomController(
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: UUID) {
         service.delete(id)
     }

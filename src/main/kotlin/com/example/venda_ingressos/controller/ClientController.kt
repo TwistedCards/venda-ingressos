@@ -4,12 +4,11 @@ import com.example.venda_ingressos.controller.request.ClientRequest
 import com.example.venda_ingressos.controller.request.paged.PagedRequest
 import com.example.venda_ingressos.controller.response.ClientResponse
 import com.example.venda_ingressos.controller.response.paged.ClientPagedResponse
-import com.example.venda_ingressos.entities.Client
 import com.example.venda_ingressos.service.ClientService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.UUID
+import java.util.*
 
 @RestController
 @RequestMapping("/clients")
@@ -19,7 +18,7 @@ class ClientController(
 
     @PostMapping
     fun save(@RequestBody request: ClientRequest): ResponseEntity<ClientResponse> {
-        return ResponseEntity.status(HttpStatus.OK).body(service.save(request))
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(request))
     }
 
     @GetMapping
@@ -43,6 +42,7 @@ class ClientController(
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@RequestParam id: UUID) {
         service.delete(id)
     }

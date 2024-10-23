@@ -10,14 +10,16 @@ class Session(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
+    @Column(name = "start_time")
     var startTime: LocalDateTime,
 
-    var subtitled: String,
+    // TODO tirar duvida sobre esse cara, no site ele ta como tinyint
+//    var subtitled: String,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id", nullable = false)
     var movie: Movie,
 
     @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
-    var seatSessions: MutableList<SeatSession>
+    var seatSessions: MutableList<SeatSession>? = null
 )
