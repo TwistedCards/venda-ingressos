@@ -1,0 +1,1 @@
+INSERT INTO CLIENT (id, name, cpf) VALUES (1, 'paulo', '465.266.038.31')
