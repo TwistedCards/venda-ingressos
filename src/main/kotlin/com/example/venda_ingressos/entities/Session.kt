@@ -21,5 +21,8 @@ class Session(
     var movie: Movie,
 
     @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
-    var seatSessions: MutableList<SeatSession>? = null
+    var seatSessions: MutableList<SeatSession>? = null,
+
+    @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
+    var buySeatSessions: MutableList<BuySeatSession>? = null
 )
