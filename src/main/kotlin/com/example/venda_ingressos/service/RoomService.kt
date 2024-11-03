@@ -4,6 +4,7 @@ import com.example.venda_ingressos.controller.request.RoomRequest
 import com.example.venda_ingressos.controller.request.paged.PagedRequest
 import com.example.venda_ingressos.controller.response.RoomResponse
 import com.example.venda_ingressos.entities.Room
+import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.mapper.RoomMapper
 import com.example.venda_ingressos.repository.CinemaRepository
 import com.example.venda_ingressos.repository.RoomRepository
@@ -24,7 +25,7 @@ class RoomService(
 
     fun save(request: RoomRequest): RoomResponse {
         val entityCinema = cinemaRepository.findById(request.idCinema)
-            .orElseThrow { throw NullPointerException("m=save, msg=Cinema with id ${request.idCinema} not found") }
+            .orElseThrow { throw EntityNotFoundException("m=save, msg=Cinema with id ${request.idCinema} not found") }
 
         val roomEntity = repository.save(mapper.requestToEntity(request, entityCinema))
 

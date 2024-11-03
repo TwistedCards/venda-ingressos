@@ -30,13 +30,13 @@ dependencies {
 	implementation("com.fasterxml.jackson.core:jackson-databind:2.17.1")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
-
-
 	runtimeOnly("com.h2database:h2")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+	testImplementation("org.springframework.security:spring-security-test:5.5.2")
+	testImplementation("io.mockk:mockk:1.12.0")
 	testImplementation("org.springframework.kafka:spring-kafka-test")
+//	testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
