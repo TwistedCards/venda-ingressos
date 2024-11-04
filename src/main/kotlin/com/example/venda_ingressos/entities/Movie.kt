@@ -11,15 +11,11 @@ data class Movie(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
 
+    @Column(unique = true)
     var title: String,
 
     @Column(name="original_title")
     var originalTitle: String,
-
-    @Column(name="img_poster")
-    var imgPoster: String? = null,
-
-    var trailer: String? = null,
 
     @Column(name="indicative_classification")
     var indicativeClassification: String? = null,

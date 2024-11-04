@@ -12,6 +12,7 @@ data class Cinema(
     @Column(unique = true)
     var phone: String,
 
+    @Column(unique = true)
     var name: String,
 
     @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
