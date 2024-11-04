@@ -5,7 +5,6 @@ import com.example.venda_ingressos.controller.request.RoomRequest
 import com.example.venda_ingressos.controller.request.paged.PagedRequest
 import com.example.venda_ingressos.controller.response.MovieResponse
 import com.example.venda_ingressos.controller.response.RoomResponse
-import com.example.venda_ingressos.controller.response.paged.CinemaPagedResponse
 import com.example.venda_ingressos.controller.response.paged.MoviePagedResponse
 import com.example.venda_ingressos.controller.response.paged.RoomPagedResponse
 import com.example.venda_ingressos.service.MovieService

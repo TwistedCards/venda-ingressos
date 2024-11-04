@@ -3,7 +3,6 @@ package com.example.venda_ingressos.controller
 import com.example.venda_ingressos.controller.request.RoomRequest
 import com.example.venda_ingressos.controller.request.paged.PagedRequest
 import com.example.venda_ingressos.controller.response.RoomResponse
-import com.example.venda_ingressos.controller.response.paged.CinemaPagedResponse
 import com.example.venda_ingressos.controller.response.paged.RoomPagedResponse
 import com.example.venda_ingressos.service.RoomService
 import org.springframework.http.HttpStatus
