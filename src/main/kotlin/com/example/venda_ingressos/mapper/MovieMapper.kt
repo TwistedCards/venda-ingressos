@@ -12,8 +12,6 @@ class MovieMapper {
         return MovieResponse(
             title = entity.title,
             originalTitle = entity.originalTitle,
-            imgPoster = entity.imgPoster,
-            trailer = entity.trailer,
             indicativeClassification = entity.indicativeClassification,
             duration = entity.duration,
             releaseDate = entity.releaseDate,

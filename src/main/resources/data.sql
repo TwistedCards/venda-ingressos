@@ -11,8 +11,8 @@ INSERT INTO ROOM
 VALUES('8b295545-a37c-431c-901b-fc10c26ae1f0', 100, '3B', '4497ec6f-ba6c-426b-a34d-a24f92cb5ca4');
 
 INSERT INTO MOVIE
-(id, title, original_title, img_poster, trailer, indicative_classification, duration, release_date, synopsis)
-VALUES('03b12386-aa5f-4308-b66e-dad5a683accd', 'Harry Potter', 'Harry Potter', null, null, 14, null, DATEADD('DAY', -90, CURRENT_TIMESTAMP), 'bla bla bla');
+(id, title, original_title, indicative_classification, duration, release_date, synopsis)
+VALUES('03b12386-aa5f-4308-b66e-dad5a683accd', 'Harry Potter', 'Harry Potter', 14, null, DATEADD('DAY', -90, CURRENT_TIMESTAMP), 'bla bla bla');
 
 INSERT INTO SEAT
 (id, cod_seat, category, movie_id)
