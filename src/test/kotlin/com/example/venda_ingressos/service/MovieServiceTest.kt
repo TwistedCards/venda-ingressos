@@ -2,9 +2,13 @@ package com.example.venda_ingressos.service
 
 import com.example.venda_ingressos.controller.request.MovieRequest
 import com.example.venda_ingressos.controller.response.MovieResponse
+import com.example.venda_ingressos.entities.CategoryEnum
 import com.example.venda_ingressos.entities.Movie
+import com.example.venda_ingressos.entities.Seat
+import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.mapper.MovieMapper
 import com.example.venda_ingressos.repository.MovieRepository
+import com.example.venda_ingressos.repository.SeatRepository
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -16,6 +20,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import java.time.LocalDate
 import java.util.*
@@ -27,6 +32,9 @@ class MovieServiceTest {
     private lateinit var repository: MovieRepository
 
     @MockK
+    private lateinit var seatRepository: SeatRepository
+
+    @MockK
     private lateinit var mapper: MovieMapper
 
     @InjectMockKs
@@ -35,6 +43,7 @@ class MovieServiceTest {
     private lateinit var request: MovieRequest
     private lateinit var response: MovieResponse
     private lateinit var fakeEntity: Movie
+    private lateinit var fakeSeatEntity: Seat
 
     @BeforeEach
     fun setUp() {
@@ -53,6 +62,13 @@ class MovieServiceTest {
             indicativeClassification = "18",
             releaseDate = LocalDate.now(),
             synopsis = "bla bla bla"
+        )
+
+        fakeSeatEntity = Seat(
+            id = UUID.fromString("195f471e-0234-446f-be1f-014b77809703"),
+            codSeat = "3B",
+            category = CategoryEnum.NORMAL,
+            movie = fakeEntity
         )
 
         response = MovieResponse(
@@ -81,11 +97,6 @@ class MovieServiceTest {
     }
 
     @Test
-    @DisplayName("Efetua o cadastro do filme com os assentos e sessões")
-    fun `register the cinema with the seats and sessions`() {
-    }
-
-    @Test
     @DisplayName("Busca o filme baseado no ID passado")
     fun `search for the cinema based on the ID provided`() {
         every { repository.findById(any()).get() } returns fakeEntity
@@ -99,6 +110,19 @@ class MovieServiceTest {
     @Test
     @DisplayName("Busca todos os filmes já cadastrados na base")
     fun `find all movies registered in the database`() {
+    }
+
+    @Test
+    @DisplayName("Retorna uma exception ao buscar um filme com um id que não existe")
+    fun `returns an exception when searching for a movie with an id that does not exist`() {
+        val id = UUID.randomUUID()
+
+        every { repository.findById(id) } returns Optional.empty()
+
+        val error = assertThrows<EntityNotFoundException>{ service.findById(id) }
+
+        verify(exactly = 1) { repository.findById(any()) }
+        assertEquals("O filme com id $id não foi encontrado", error.message)
     }
 
     @Test

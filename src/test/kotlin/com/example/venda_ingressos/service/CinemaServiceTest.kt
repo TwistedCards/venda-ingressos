@@ -3,6 +3,7 @@ package com.example.venda_ingressos.service
 import com.example.venda_ingressos.controller.request.CinemaRequest
 import com.example.venda_ingressos.controller.response.CinemaResponse
 import com.example.venda_ingressos.entities.Cinema
+import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.mapper.CinemaMapper
 import com.example.venda_ingressos.repository.CinemaRepository
 import io.mockk.every
@@ -16,7 +17,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
+import com.example.venda_ingressos.exceptions.DataIntegrityViolationException
 import java.util.*
 
 @ExtendWith(MockKExtension::class)
@@ -67,11 +70,6 @@ class CinemaServiceTest {
     }
 
     @Test
-    @DisplayName("Efetua o cadastro do cinema com as salas")
-    fun `register the cinema with the rooms`() {
-    }
-
-    @Test
     @DisplayName("Busca o cinema baseado no ID passado")
     fun `search for the cinema based on the ID provided`() {
         every { repository.findById(any()).get() } returns fakeEntity
@@ -83,11 +81,6 @@ class CinemaServiceTest {
     }
 
     @Test
-    @DisplayName("Busca todos os cinemas já cadastrados na base")
-    fun `find all cinemas registered in the database`() {
-    }
-
-    @Test
     @DisplayName("Deleta o cinema")
     fun `delete the cinema`() {
         every { repository.deleteById(any()) } just runs
@@ -95,6 +88,20 @@ class CinemaServiceTest {
         service.delete(fakeEntity.id!!)
 
         verify(exactly = 1) { repository.deleteById(any()) }
+    }
+
+    @Test
+    @DisplayName("Retorna uma exception ao salvar um numero repetido")
+    fun `return an exception if save a repeated number`() {
+        every { mapper.requestToEntity(any()) } returns fakeEntity
+        every { repository.save(any()) } throws DataIntegrityViolationException(
+            "m:save, msg:O telefone '${request.phone}' já existe na base."
+        )
+
+        val error = assertThrows<DataIntegrityViolationException> { service.save(request) }
+
+        verify(exactly = 1) { repository.save(any()) }
+        assertEquals("m:save, msg:O telefone '${request.phone}' já existe na base.", error.message)
     }
 
 }
