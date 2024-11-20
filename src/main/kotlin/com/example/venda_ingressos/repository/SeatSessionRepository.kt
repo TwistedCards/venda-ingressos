@@ -6,6 +6,6 @@ import java.util.*
 
 interface SeatSessionRepository : JpaRepository<SeatSession, UUID> {
 
-    fun findBySeatAndSession(seatId: UUID, sessionId: UUID): SeatSession
+    fun findBySeatIdAndSessionId(seatId: UUID, sessionId: UUID): SeatSession
 
 }

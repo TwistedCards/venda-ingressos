@@ -19,7 +19,7 @@ class SeatService(
 ) {
 
     fun verifyIfSeatIsNotOccupied(idSeat: UUID, idSession: UUID) {
-        val seatSessionEntity = seatSessionRepository.findBySeatAndSession(idSeat, idSession)
+        val seatSessionEntity = seatSessionRepository.findBySeatIdAndSessionId(idSeat, idSession)
 
         if (seatSessionEntity.status == StatusEnum.OCCUPIED) {
             throw IllegalArgumentException("O assento ${seatSessionEntity.seat.codSeat} está ocupado.")
