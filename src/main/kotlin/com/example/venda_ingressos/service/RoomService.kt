@@ -1,14 +1,12 @@
 package com.example.venda_ingressos.service
 
 import com.example.venda_ingressos.controller.request.RoomRequest
-import com.example.venda_ingressos.controller.request.paged.PagedRequest
 import com.example.venda_ingressos.controller.response.RoomResponse
 import com.example.venda_ingressos.entities.Room
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.mapper.RoomMapper
 import com.example.venda_ingressos.repository.CinemaRepository
 import com.example.venda_ingressos.repository.RoomRepository
-import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -30,10 +28,6 @@ class RoomService(
         val roomEntity = repository.save(mapper.requestToEntity(request, entityCinema))
 
         return mapper.entityToResponse(roomEntity)
-    }
-
-    fun findAll(pagedRequest: PagedRequest): Page<RoomResponse> {
-        return repository.findAll(pagedRequest.pageable()).map { mapper.entityToResponse(it) }
     }
 
     fun delete(id: UUID) {

@@ -101,11 +101,6 @@ class RoomServiceTest {
     }
 
     @Test
-    @DisplayName("Busca todas as salas já cadastradas na base")
-    fun `find all rooms registered in the database`() {
-    }
-
-    @Test
     @DisplayName("Deleta a sala")
     fun `delete the movie`() {
         every { repository.deleteById(any()) } just runs

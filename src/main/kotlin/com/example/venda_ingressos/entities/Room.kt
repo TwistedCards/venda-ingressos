@@ -16,7 +16,6 @@ data class Room(
     @Column(name = "room_name")
     var roomName: String,
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id", nullable = false)
     var cinema: Cinema
