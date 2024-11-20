@@ -4,6 +4,8 @@ import com.example.venda_ingressos.controller.request.RoomRequest
 import com.example.venda_ingressos.controller.response.RoomResponse
 import com.example.venda_ingressos.entities.Cinema
 import com.example.venda_ingressos.entities.Room
+import com.example.venda_ingressos.exceptions.DataIntegrityViolationException
+import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.mapper.RoomMapper
 import com.example.venda_ingressos.repository.CinemaRepository
 import com.example.venda_ingressos.repository.RoomRepository
@@ -14,11 +16,8 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.extension.ExtendWith
 import java.util.*
 
@@ -108,6 +107,19 @@ class RoomServiceTest {
         service.delete(fakeEntity.id!!)
 
         verify(exactly = 1) { repository.deleteById(any()) }
+    }
+
+    @Test
+    @DisplayName("Retorna uma exception ao passar um id de cinema que não existe")
+    fun `returns an exception when passing a cinema id that does not exist`() {
+        every { cinemaRepository.findById(any()) } throws EntityNotFoundException(
+            "m=save, msg=Cinema with id ${request.idCinema} not found"
+        )
+
+        val error = assertThrows<EntityNotFoundException> { service.save(request) }
+
+        verify(exactly = 1) { cinemaRepository.findById(any()) }
+        assertEquals("m=save, msg=Cinema with id ${request.idCinema} not found", error.message)
     }
 
 }
