@@ -20,7 +20,7 @@ data class Movie(
     @Column(name="indicative_classification")
     var indicativeClassification: String? = null,
 
-    var duration: LocalDateTime? = null,
+    var duration: String,
 
     @Column(name = "release_date")
     var releaseDate: LocalDate,

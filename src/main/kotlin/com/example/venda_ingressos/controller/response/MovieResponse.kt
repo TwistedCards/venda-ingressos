@@ -6,10 +6,8 @@ import java.time.LocalDateTime
 class MovieResponse(
     val title: String,
     val originalTitle: String,
-    var imgPoster: String? = null,
-    var trailer: String? = null,
     val indicativeClassification: String? = null,
-    var duration: LocalDateTime? = null,
+    var duration: String,
     val releaseDate: LocalDate,
     val synopsis: String
 )

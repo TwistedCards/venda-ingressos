@@ -9,5 +9,6 @@ class MovieRequest(
     val indicativeClassification: String,
     @JsonFormat(pattern = "dd/MM/yyyy")
     val releaseDate: LocalDate,
-    val synopsis: String
+    val synopsis: String,
+    val duration: String
 )

@@ -25,7 +25,8 @@ class MovieMapper {
             originalTitle = request.originalTitle,
             indicativeClassification = request.indicativeClassification,
             releaseDate = request.releaseDate,
-            synopsis = request.synopsis
+            synopsis = request.synopsis,
+            duration = request.duration
         )
     }
 
