@@ -5,6 +5,7 @@ import com.example.venda_ingressos.controller.response.MovieResponse
 import com.example.venda_ingressos.entities.CategoryEnum
 import com.example.venda_ingressos.entities.Movie
 import com.example.venda_ingressos.entities.Seat
+import com.example.venda_ingressos.exceptions.DataIntegrityViolationException
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.mapper.MovieMapper
 import com.example.venda_ingressos.repository.MovieRepository
@@ -16,11 +17,8 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import java.time.LocalDate
 import java.util.*
@@ -52,7 +50,8 @@ class MovieServiceTest {
             originalTitle = "The bleeding skull",
             indicativeClassification = "18",
             releaseDate = LocalDate.now(),
-            synopsis = "bla bla bla"
+            synopsis = "bla bla bla",
+            duration = "1h30m"
         )
 
         fakeEntity = Movie(
@@ -61,7 +60,8 @@ class MovieServiceTest {
             originalTitle = "The bleeding skull",
             indicativeClassification = "18",
             releaseDate = LocalDate.now(),
-            synopsis = "bla bla bla"
+            synopsis = "bla bla bla",
+            duration = "1h30m"
         )
 
         fakeSeatEntity = Seat(
@@ -76,7 +76,8 @@ class MovieServiceTest {
             originalTitle = "The bleeding skull",
             indicativeClassification = "18",
             releaseDate = LocalDate.now(),
-            synopsis = "bla bla bla"
+            synopsis = "bla bla bla",
+            duration = "1h30m"
         )
     }
 
@@ -99,9 +100,9 @@ class MovieServiceTest {
     @Test
     @DisplayName("Busca o filme baseado no ID passado")
     fun `search for the cinema based on the ID provided`() {
-        every { repository.findById(any()).get() } returns fakeEntity
+        every { repository.findById(any()) } returns Optional.of(fakeEntity)
 
-        val movie = service.findById(fakeEntity.id!!)
+        val movie = assertDoesNotThrow{ service.findById(fakeEntity.id!!) }
 
         verify(exactly = 1) { repository.findById(any()) }
         assertEquals(fakeEntity, movie)
@@ -119,7 +120,7 @@ class MovieServiceTest {
 
         every { repository.findById(id) } returns Optional.empty()
 
-        val error = assertThrows<EntityNotFoundException>{ service.findById(id) }
+        val error = assertThrows<EntityNotFoundException> { service.findById(id) }
 
         verify(exactly = 1) { repository.findById(any()) }
         assertEquals("O filme com id $id não foi encontrado", error.message)
@@ -133,6 +134,20 @@ class MovieServiceTest {
         service.delete(fakeEntity.id!!)
 
         verify(exactly = 1) { repository.deleteById(any()) }
+    }
+
+    @Test
+    @DisplayName("Retorna uma exception ao salvar um filme repetido")
+    fun `return an exception if save a repeated movie`() {
+        every { mapper.requestToEntity(any()) } returns fakeEntity
+        every { repository.save(any()) } throws DataIntegrityViolationException(
+            "m:save, msg:O titulo '${request.title}' já existe na base."
+        )
+
+        val error = assertThrows<DataIntegrityViolationException> { service.save(request) }
+
+        verify(exactly = 1) { repository.save(any()) }
+        assertEquals("m:save, msg:O titulo '${request.title}' já existe na base.", error.message)
     }
 
 }
