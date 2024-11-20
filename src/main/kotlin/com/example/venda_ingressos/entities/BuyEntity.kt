@@ -3,8 +3,8 @@ package com.example.venda_ingressos.entities
 import jakarta.persistence.*
 import java.util.*
 
-@Entity
-data class Buy(
+@Entity(name = "Buy")
+data class BuyEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
@@ -13,5 +13,5 @@ data class Buy(
     var codBuy: Int, // Codigo da compra
 
     @OneToMany(mappedBy = "buy", fetch = FetchType.LAZY)
-    var buySeatSessions: MutableList<BuySeatSession>? = null
+    var buySeatSessions: MutableList<BuySeatSessionEntity>? = null
 )

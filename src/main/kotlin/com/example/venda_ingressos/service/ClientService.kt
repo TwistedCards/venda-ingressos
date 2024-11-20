@@ -3,7 +3,7 @@ package com.example.venda_ingressos.service
 import com.example.venda_ingressos.controller.request.ClientRequest
 import com.example.venda_ingressos.controller.request.paged.PagedRequest
 import com.example.venda_ingressos.controller.response.ClientResponse
-import com.example.venda_ingressos.entities.Client
+import com.example.venda_ingressos.entities.ClientEntity
 import com.example.venda_ingressos.mapper.ClientMapper
 import com.example.venda_ingressos.repository.ClientRepository
 import org.springframework.data.domain.Page
@@ -16,7 +16,7 @@ class ClientService(
     private val mapper: ClientMapper
 ) {
 
-    fun findById(id: UUID): Client {
+    fun findById(id: UUID): ClientEntity {
         return repository.findById(id).get()
     }
 

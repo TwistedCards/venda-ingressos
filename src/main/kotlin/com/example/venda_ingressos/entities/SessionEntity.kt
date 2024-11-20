@@ -4,8 +4,8 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 import java.util.*
 
-@Entity
-class Session(
+@Entity(name = "Session")
+class SessionEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
@@ -13,16 +13,17 @@ class Session(
     @Column(name = "start_time")
     var startTime: LocalDateTime,
 
-    // TODO tirar duvida sobre esse cara, no site ele ta como tinyint
-//    var subtitled: String,
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id", nullable = false)
-    var movie: Movie,
+    var movie: MovieEntity,
 
     @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
-    var seatSessions: MutableList<SeatSession>? = null,
+    var seatSessions: MutableList<SeatSessionEntity>? = null,
 
     @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
-    var buySeatSessions: MutableList<BuySeatSession>? = null
+    var buySeatSessions: MutableList<BuySeatSessionEntity>? = null,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id", nullable = false)
+    var room: RoomEntity
 )

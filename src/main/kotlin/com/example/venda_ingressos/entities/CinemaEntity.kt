@@ -1,10 +1,11 @@
 package com.example.venda_ingressos.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.util.*
 
-@Entity
-data class Cinema(
+@Entity(name = "Cinema")
+data class CinemaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
@@ -14,6 +15,7 @@ data class Cinema(
 
     var name: String,
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
-    var rooms: MutableList<Room>? = null
+    var rooms: MutableList<RoomEntity>? = null
 )

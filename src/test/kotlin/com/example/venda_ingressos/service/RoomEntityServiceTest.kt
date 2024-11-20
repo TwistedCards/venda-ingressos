@@ -2,9 +2,8 @@ package com.example.venda_ingressos.service
 
 import com.example.venda_ingressos.controller.request.RoomRequest
 import com.example.venda_ingressos.controller.response.RoomResponse
-import com.example.venda_ingressos.entities.Cinema
-import com.example.venda_ingressos.entities.Room
-import com.example.venda_ingressos.exceptions.DataIntegrityViolationException
+import com.example.venda_ingressos.entities.CinemaEntity
+import com.example.venda_ingressos.entities.RoomEntity
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.mapper.RoomMapper
 import com.example.venda_ingressos.repository.CinemaRepository
@@ -22,7 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import java.util.*
 
 @ExtendWith(MockKExtension::class)
-class RoomServiceTest {
+class RoomEntityServiceTest {
 
     @MockK
     private lateinit var repository: RoomRepository
@@ -38,12 +37,12 @@ class RoomServiceTest {
 
     private lateinit var request: RoomRequest
     private lateinit var response: RoomResponse
-    private lateinit var fakeEntity: Room
-    private lateinit var fakeCinema: Cinema
+    private lateinit var fakeEntity: RoomEntity
+    private lateinit var fakeCinema: CinemaEntity
 
     @BeforeEach
     fun setUp() {
-        fakeCinema = Cinema(
+        fakeCinema = CinemaEntity(
             id = UUID.fromString("486db27f-de44-4e73-8511-ab656dba1cce"),
             phone = "01111111111",
             name = "Cinemax"
@@ -55,7 +54,7 @@ class RoomServiceTest {
             idCinema = UUID.fromString("486db27f-de44-4e73-8511-ab656dba1cce")
         )
 
-        fakeEntity = Room(
+        fakeEntity = RoomEntity(
             id = UUID.fromString("205847e8-7c73-4257-8d5f-9b2c61f9838b"),
             totalCapacity = 100,
             roomName = "5B",

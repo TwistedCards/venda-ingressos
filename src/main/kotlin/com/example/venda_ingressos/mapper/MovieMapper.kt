@@ -2,14 +2,15 @@ package com.example.venda_ingressos.mapper
 
 import com.example.venda_ingressos.controller.request.MovieRequest
 import com.example.venda_ingressos.controller.response.MovieResponse
-import com.example.venda_ingressos.entities.Movie
+import com.example.venda_ingressos.entities.MovieEntity
 import org.springframework.stereotype.Component
 
 @Component
 class MovieMapper {
 
-    fun entityToResponse(entity: Movie): MovieResponse {
+    fun entityToResponse(entity: MovieEntity): MovieResponse {
         return MovieResponse(
+            id = entity.id!!,
             title = entity.title,
             originalTitle = entity.originalTitle,
             indicativeClassification = entity.indicativeClassification,
@@ -19,8 +20,8 @@ class MovieMapper {
         )
     }
 
-    fun requestToEntity(request: MovieRequest): Movie {
-        return Movie(
+    fun requestToEntity(request: MovieRequest): MovieEntity {
+        return MovieEntity(
             title = request.title,
             originalTitle = request.originalTitle,
             indicativeClassification = request.indicativeClassification,

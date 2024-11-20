@@ -3,8 +3,8 @@ package com.example.venda_ingressos.service
 import com.example.venda_ingressos.controller.request.MovieRequest
 import com.example.venda_ingressos.controller.response.MovieResponse
 import com.example.venda_ingressos.entities.CategoryEnum
-import com.example.venda_ingressos.entities.Movie
-import com.example.venda_ingressos.entities.Seat
+import com.example.venda_ingressos.entities.MovieEntity
+import com.example.venda_ingressos.entities.SeatEntity
 import com.example.venda_ingressos.exceptions.DataIntegrityViolationException
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.mapper.MovieMapper
@@ -24,7 +24,7 @@ import java.time.LocalDate
 import java.util.*
 
 @ExtendWith(MockKExtension::class)
-class MovieServiceTest {
+class MovieEntityServiceTest {
 
     @MockK
     private lateinit var repository: MovieRepository
@@ -40,8 +40,8 @@ class MovieServiceTest {
 
     private lateinit var request: MovieRequest
     private lateinit var response: MovieResponse
-    private lateinit var fakeEntity: Movie
-    private lateinit var fakeSeatEntity: Seat
+    private lateinit var fakeEntity: MovieEntity
+    private lateinit var fakeSeatEntity: SeatEntity
 
     @BeforeEach
     fun setUp() {
@@ -54,7 +54,7 @@ class MovieServiceTest {
             duration = "1h30m"
         )
 
-        fakeEntity = Movie(
+        fakeEntity = MovieEntity(
             id = UUID.fromString("205847e8-7c73-4257-8d5f-9b2c61f9838b"),
             title = "A caveira que sangrava",
             originalTitle = "The bleeding skull",
@@ -64,7 +64,7 @@ class MovieServiceTest {
             duration = "1h30m"
         )
 
-        fakeSeatEntity = Seat(
+        fakeSeatEntity = SeatEntity(
             id = UUID.fromString("195f471e-0234-446f-be1f-014b77809703"),
             codSeat = "3B",
             category = CategoryEnum.NORMAL,

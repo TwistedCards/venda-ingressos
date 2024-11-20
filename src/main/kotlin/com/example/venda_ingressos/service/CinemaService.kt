@@ -2,7 +2,7 @@ package com.example.venda_ingressos.service
 
 import com.example.venda_ingressos.controller.request.CinemaRequest
 import com.example.venda_ingressos.controller.response.CinemaResponse
-import com.example.venda_ingressos.entities.Cinema
+import com.example.venda_ingressos.entities.CinemaEntity
 import com.example.venda_ingressos.exceptions.DataIntegrityViolationException as DataIntegrityViolationExceptionLocal
 import com.example.venda_ingressos.mapper.CinemaMapper
 import com.example.venda_ingressos.repository.CinemaRepository
@@ -16,7 +16,7 @@ class CinemaService(
     private val repository: CinemaRepository,
     private val mapper: CinemaMapper
 ) {
-    fun findById(id: UUID): Cinema {
+    fun findById(id: UUID): CinemaEntity {
         return repository.findById(id).get()
     }
 

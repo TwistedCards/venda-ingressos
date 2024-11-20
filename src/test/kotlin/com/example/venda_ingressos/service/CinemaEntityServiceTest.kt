@@ -2,8 +2,7 @@ package com.example.venda_ingressos.service
 
 import com.example.venda_ingressos.controller.request.CinemaRequest
 import com.example.venda_ingressos.controller.response.CinemaResponse
-import com.example.venda_ingressos.entities.Cinema
-import com.example.venda_ingressos.exceptions.EntityNotFoundException
+import com.example.venda_ingressos.entities.CinemaEntity
 import com.example.venda_ingressos.mapper.CinemaMapper
 import com.example.venda_ingressos.repository.CinemaRepository
 import io.mockk.every
@@ -23,7 +22,7 @@ import com.example.venda_ingressos.exceptions.DataIntegrityViolationException
 import java.util.*
 
 @ExtendWith(MockKExtension::class)
-class CinemaServiceTest {
+class CinemaEntityServiceTest {
 
     @MockK
     private lateinit var repository: CinemaRepository
@@ -36,12 +35,12 @@ class CinemaServiceTest {
 
     private lateinit var request: CinemaRequest
     private lateinit var response: CinemaResponse
-    private lateinit var fakeEntity: Cinema
+    private lateinit var fakeEntity: CinemaEntity
 
     @BeforeEach
     fun setUp() {
         request = CinemaRequest(phone = "01111111111", name = "Cinemax")
-        fakeEntity = Cinema(
+        fakeEntity = CinemaEntity(
             id = UUID.fromString("205847e8-7c73-4257-8d5f-9b2c61f9838b"),
             phone = "01111111111",
             name = "Cinemax"

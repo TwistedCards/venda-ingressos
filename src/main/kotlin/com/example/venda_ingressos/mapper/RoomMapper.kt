@@ -1,19 +1,15 @@
 package com.example.venda_ingressos.mapper
 
-import com.example.venda_ingressos.controller.request.CinemaRequest
 import com.example.venda_ingressos.controller.request.RoomRequest
-import com.example.venda_ingressos.controller.response.CinemaResponse
-import com.example.venda_ingressos.controller.response.ClientResponse
 import com.example.venda_ingressos.controller.response.RoomResponse
-import com.example.venda_ingressos.entities.Cinema
-import com.example.venda_ingressos.entities.Client
-import com.example.venda_ingressos.entities.Room
+import com.example.venda_ingressos.entities.CinemaEntity
+import com.example.venda_ingressos.entities.RoomEntity
 import org.springframework.stereotype.Component
 
 @Component
 class RoomMapper {
 
-    fun entityToResponse(entity: Room): RoomResponse {
+    fun entityToResponse(entity: RoomEntity): RoomResponse {
         return RoomResponse(
             id = entity.id!!,
             totalCapacity = entity.totalCapacity,
@@ -21,8 +17,8 @@ class RoomMapper {
         )
     }
 
-    fun requestToEntity(request: RoomRequest, cinemaEntity: Cinema): Room {
-        return Room(
+    fun requestToEntity(request: RoomRequest, cinemaEntity: CinemaEntity): RoomEntity {
+        return RoomEntity(
             totalCapacity = request.totalCapacity,
             roomName = request.roomName,
             cinema = cinemaEntity

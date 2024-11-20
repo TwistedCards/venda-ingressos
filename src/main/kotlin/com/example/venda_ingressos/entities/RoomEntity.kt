@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.util.*
 
-@Entity
-data class Room(
+@Entity(name = "Room")
+data class RoomEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
@@ -18,5 +18,9 @@ data class Room(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id", nullable = false)
-    var cinema: Cinema
+    var cinema: CinemaEntity,
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    var sessions: MutableList<SessionEntity>? = null
 )

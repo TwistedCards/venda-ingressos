@@ -3,8 +3,8 @@ package com.example.venda_ingressos.entities
 import jakarta.persistence.*
 import java.util.*
 
-@Entity
-data class Seat(
+@Entity(name = "Seat")
+data class SeatEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
@@ -17,11 +17,11 @@ data class Seat(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id", nullable = false)
-    var movie: Movie,
+    var movie: MovieEntity,
 
     @OneToMany(mappedBy = "seat", fetch = FetchType.LAZY)
-    var seatSessions: MutableList<SeatSession>? = null,
+    var seatSessions: MutableList<SeatSessionEntity>? = null,
 
     @OneToMany(mappedBy = "seat", fetch = FetchType.LAZY)
-    var buySeatSessions: MutableList<BuySeatSession>? = null
+    var buySeatSessions: MutableList<BuySeatSessionEntity>? = null
 )

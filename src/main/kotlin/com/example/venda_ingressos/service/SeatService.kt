@@ -1,11 +1,7 @@
 package com.example.venda_ingressos.service
 
-import com.example.venda_ingressos.controller.request.CinemaRequest
-import com.example.venda_ingressos.controller.response.CinemaResponse
 import com.example.venda_ingressos.controller.response.SeatResponse
-import com.example.venda_ingressos.entities.Seat
 import com.example.venda_ingressos.entities.StatusEnum
-import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.exceptions.IllegalArgumentException
 import com.example.venda_ingressos.repository.SeatRepository
 import com.example.venda_ingressos.repository.SeatSessionRepository

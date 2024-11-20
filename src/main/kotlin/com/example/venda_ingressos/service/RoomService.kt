@@ -2,7 +2,7 @@ package com.example.venda_ingressos.service
 
 import com.example.venda_ingressos.controller.request.RoomRequest
 import com.example.venda_ingressos.controller.response.RoomResponse
-import com.example.venda_ingressos.entities.Room
+import com.example.venda_ingressos.entities.RoomEntity
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.mapper.RoomMapper
 import com.example.venda_ingressos.repository.CinemaRepository
@@ -17,7 +17,7 @@ class RoomService(
     private val mapper: RoomMapper
 ) {
 
-    fun findById(id: UUID): Room {
+    fun findById(id: UUID): RoomEntity {
         return repository.findById(id).get()
     }
 

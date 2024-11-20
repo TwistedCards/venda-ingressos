@@ -19,8 +19,8 @@ INSERT INTO SEAT
 VALUES('db9deab5-606b-4f55-a510-3c58efcb85dd', 'H12', 'VIP', '03b12386-aa5f-4308-b66e-dad5a683accd');
 
 INSERT INTO SESSION
-(id, start_time, movie_id)
-VALUES('7ee87f6b-e030-4ebd-9e85-70814a9f402e', CURRENT_TIMESTAMP, '03b12386-aa5f-4308-b66e-dad5a683accd');
+(id, start_time, movie_id, room_id)
+VALUES('7ee87f6b-e030-4ebd-9e85-70814a9f402e', CURRENT_TIMESTAMP, '03b12386-aa5f-4308-b66e-dad5a683accd', '8b295545-a37c-431c-901b-fc10c26ae1f0');
 
 INSERT INTO SEAT_SESSION
 (id, status, seat_id, session_id)

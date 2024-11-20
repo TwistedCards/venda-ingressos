@@ -2,11 +2,10 @@ package com.example.venda_ingressos.entities
 
 import jakarta.persistence.*
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 
-@Entity
-data class Movie(
+@Entity(name = "Movie")
+data class MovieEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
@@ -29,8 +28,8 @@ data class Movie(
     var synopsis: String,
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-    var sessions: MutableList<Session>? = null,
+    var sessions: MutableList<SessionEntity>? = null,
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-    var seats: MutableList<Seat>? = null
+    var seats: MutableList<SeatEntity>? = null
 )

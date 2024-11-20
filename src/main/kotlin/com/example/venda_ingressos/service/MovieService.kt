@@ -3,7 +3,7 @@ package com.example.venda_ingressos.service
 import com.example.venda_ingressos.controller.request.MovieRequest
 import com.example.venda_ingressos.controller.request.paged.PagedRequest
 import com.example.venda_ingressos.controller.response.MovieResponse
-import com.example.venda_ingressos.entities.Movie
+import com.example.venda_ingressos.entities.MovieEntity
 import com.example.venda_ingressos.exceptions.DataIntegrityViolationException as DataIntegrityViolationExceptionLocal
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.mapper.MovieMapper
@@ -19,7 +19,7 @@ class MovieService(
     private val mapper: MovieMapper
 ) {
 
-    fun findById(id: UUID): Movie {
+    fun findById(id: UUID): MovieEntity {
         return repository.findById(id).orElseThrow { EntityNotFoundException("O filme com id $id não foi encontrado") }
     }
 

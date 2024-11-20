@@ -2,7 +2,7 @@ package com.example.venda_ingressos.service
 
 import com.example.venda_ingressos.controller.request.ClientRequest
 import com.example.venda_ingressos.controller.response.ClientResponse
-import com.example.venda_ingressos.entities.Client
+import com.example.venda_ingressos.entities.ClientEntity
 import com.example.venda_ingressos.mapper.ClientMapper
 import com.example.venda_ingressos.repository.ClientRepository
 import io.mockk.every
@@ -21,7 +21,7 @@ import java.util.*
 
 
 @ExtendWith(MockKExtension::class)
-class ClientServiceTest {
+class ClientEntityServiceTest {
 
     @MockK
     private lateinit var repository: ClientRepository
@@ -34,12 +34,12 @@ class ClientServiceTest {
 
     private lateinit var request: ClientRequest
     private lateinit var response: ClientResponse
-    private lateinit var fakeEntity: Client
+    private lateinit var fakeEntity: ClientEntity
 
     @BeforeEach
     fun setUp() {
         request = ClientRequest(name = "Paulo", cpf = "111.111.111-11")
-        fakeEntity = Client(
+        fakeEntity = ClientEntity(
             id = UUID.fromString("205847e8-7c73-4257-8d5f-9b2c61f9838b"),
             name = "Paulo",
             cpf = "111.111.111-11"
@@ -85,7 +85,7 @@ class ClientServiceTest {
     @Test
     @DisplayName("Edita o client")
     fun `edit the client`() {
-        val entityEdit = Client(
+        val entityEdit = ClientEntity(
             name = "PauloEdit",
             cpf = "222.222.222.22"
         )
