@@ -22,7 +22,7 @@ import com.example.venda_ingressos.exceptions.DataIntegrityViolationException
 import java.util.*
 
 @ExtendWith(MockKExtension::class)
-class CinemaEntityServiceTest {
+class CinemaServiceTest {
 
     @MockK
     private lateinit var repository: CinemaRepository

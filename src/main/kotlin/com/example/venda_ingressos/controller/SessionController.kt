@@ -21,10 +21,4 @@ class SessionController(
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(request))
     }
 
-//    @DeleteMapping("/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    fun delete(@PathVariable id: UUID) {
-//        service.delete(id)
-//    }
-
 }

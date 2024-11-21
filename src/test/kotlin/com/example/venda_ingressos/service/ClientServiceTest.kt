@@ -20,11 +20,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
-import org.springframework.data.domain.Pageable
 import java.util.*
 
 @ExtendWith(MockKExtension::class)
-class ClientEntityServiceTest {
+class ClientServiceTest {
 
     @MockK
     private lateinit var repository: ClientRepository

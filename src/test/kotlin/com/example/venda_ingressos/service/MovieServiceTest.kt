@@ -24,7 +24,7 @@ import java.time.LocalDate
 import java.util.*
 
 @ExtendWith(MockKExtension::class)
-class MovieEntityServiceTest {
+class MovieServiceTest {
 
     @MockK
     private lateinit var repository: MovieRepository
