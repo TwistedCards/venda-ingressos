@@ -4,6 +4,7 @@ import com.example.venda_ingressos.controller.request.SessionRequest
 import com.example.venda_ingressos.controller.response.SeatResponse
 import com.example.venda_ingressos.controller.response.SessionResponse
 import com.example.venda_ingressos.entities.StatusEnum
+import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.exceptions.IllegalArgumentException
 import com.example.venda_ingressos.mapper.SessionMapper
 import com.example.venda_ingressos.repository.*
@@ -19,10 +20,13 @@ class SessionService(
 ) {
 
     fun save(request: SessionRequest): SessionResponse {
-        val movieEntity = movieRepository.findById(request.idMovie).get()
-        val roomEntity = roomRepository.findById(request.idRoom).get()
+        val movieEntity = movieRepository.findById(request.idMovie).orElseThrow {
+            EntityNotFoundException("O filme com id ${request.idMovie} não foi encontrado.")
+        }
 
-        println("RoomEntity: $roomEntity")
+        val roomEntity = roomRepository.findById(request.idRoom).orElseThrow {
+            EntityNotFoundException("A sala com id ${request.idRoom} não foi encontrada.")
+        }
 
         val entity = mapper.requestToEntity(request, movieEntity, roomEntity)
 

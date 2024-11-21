@@ -5,7 +5,7 @@ import jakarta.persistence.*
 import java.util.*
 
 @Entity(name = "Room")
-data class RoomEntity(
+class RoomEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
