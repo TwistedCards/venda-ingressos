@@ -100,7 +100,7 @@ class SessionServiceTest {
         every { movieRepository.findById(any()) } returns Optional.of(movieEntity)
         every { roomRepository.findById(any()) } returns Optional.of(roomEntity)
         every { mapper.requestToEntity(any(), any(), any()) } returns fakeEntity
-        every { repository.findByMovieId(any()) } returns mutableListOf(fakeEntity)
+        every { repository.findByMovieId(any()) } returns null
         every { repository.save(any()) } returns fakeEntity
         every { mapper.entityToResponse(any()) } returns response
 
@@ -118,7 +118,7 @@ class SessionServiceTest {
     @Test
     @DisplayName("Retorna uma exceção ao não encontrar o filme pelo id")
     fun `returns an exception when not finding the movie by id`() {
-        every { repository.findByMovieId(any()) } returns mutableListOf(fakeEntity)
+        every { repository.findByMovieId(any()) } returns null
         every { movieRepository.findById(any()) } throws EntityNotFoundException(
             "O filme com id ${request.idMovie} não foi encontrado."
         )
@@ -132,7 +132,7 @@ class SessionServiceTest {
     @Test
     @DisplayName("Retorna uma exceção ao não encontrar a sala pelo id")
     fun `returns an exception when not finding the room by id`() {
-        every { repository.findByMovieId(any()) } returns mutableListOf(fakeEntity)
+        every { repository.findByMovieId(any()) } returns null
         every { movieRepository.findById(any()) } returns Optional.of(movieEntity)
         every { roomRepository.findById(any()) } throws EntityNotFoundException(
             "A sala com id ${request.idRoom} não foi encontrada."
