@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 class MovieResponse(
-    val id: UUID,
+    val id: UUID? = null,
     val title: String,
     val originalTitle: String,
     val indicativeClassification: String? = null,

@@ -1,6 +1,7 @@
 package com.example.venda_ingressos.service
 
 import com.example.venda_ingressos.controller.request.ClientRequest
+import com.example.venda_ingressos.controller.request.paged.PagedRequest
 import com.example.venda_ingressos.controller.response.ClientResponse
 import com.example.venda_ingressos.entities.ClientEntity
 import com.example.venda_ingressos.mapper.ClientMapper
@@ -12,13 +13,15 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Pageable
 import java.util.*
-
 
 @ExtendWith(MockKExtension::class)
 class ClientEntityServiceTest {
@@ -53,7 +56,7 @@ class ClientEntityServiceTest {
 
     @Test
     @DisplayName("Efetua o cadastro do cliente")
-    fun `register the client` () {
+    fun `register the client`() {
         every { mapper.requestToEntity(request) } returns fakeEntity
         every { repository.save(fakeEntity) } returns fakeEntity
         every { mapper.entityToResponse(fakeEntity) } returns response
@@ -79,7 +82,23 @@ class ClientEntityServiceTest {
 
     @Test
     @DisplayName("Deve buscar todos os client já cadastrados na base")
-    fun teste2() {
+    fun `must search for all customers already registered in the database`() {
+        val pagedRequest = PagedRequest(
+            size = 20,
+            offset = 0
+        )
+
+        val page: Page<ClientEntity> = PageImpl(listOf(fakeEntity))
+
+        every { repository.findAll(pagedRequest.pageable()) } returns page
+        every { mapper.entityToResponse(fakeEntity) } returns response
+
+        val result = service.findAll(pagedRequest)
+
+        verify(exactly = 1) { repository.findAll(pagedRequest.pageable()) }
+        assertNotNull(result)
+        assertEquals(result.totalPages, 1)
+        assertEquals(result.totalElements, 1)
     }
 
     @Test
