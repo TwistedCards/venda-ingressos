@@ -7,6 +7,7 @@ import com.example.venda_ingressos.entities.MovieEntity
 import com.example.venda_ingressos.entities.RoomEntity
 import com.example.venda_ingressos.entities.SessionEntity
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
+import com.example.venda_ingressos.exceptions.IllegalArgumentException
 import com.example.venda_ingressos.mapper.SessionMapper
 import com.example.venda_ingressos.repository.MovieRepository
 import com.example.venda_ingressos.repository.RoomRepository
@@ -81,7 +82,7 @@ class SessionServiceTest {
 
         fakeEntity = SessionEntity(
             id = UUID.fromString("205847e8-7c73-4257-8d5f-9b2c61f9838b"),
-            startTime = LocalDateTime.now(),
+            startTime = LocalDateTime.parse("2019-03-27T10:15:30"),
             movie = movieEntity,
             room = roomEntity
         )
@@ -99,7 +100,7 @@ class SessionServiceTest {
         every { movieRepository.findById(any()) } returns Optional.of(movieEntity)
         every { roomRepository.findById(any()) } returns Optional.of(roomEntity)
         every { mapper.requestToEntity(any(), any(), any()) } returns fakeEntity
-
+        every { repository.findByMovieId(any()) } returns mutableListOf(fakeEntity)
         every { repository.save(any()) } returns fakeEntity
         every { mapper.entityToResponse(any()) } returns response
 
@@ -117,6 +118,7 @@ class SessionServiceTest {
     @Test
     @DisplayName("Retorna uma exceção ao não encontrar o filme pelo id")
     fun `returns an exception when not finding the movie by id`() {
+        every { repository.findByMovieId(any()) } returns mutableListOf(fakeEntity)
         every { movieRepository.findById(any()) } throws EntityNotFoundException(
             "O filme com id ${request.idMovie} não foi encontrado."
         )
@@ -130,6 +132,7 @@ class SessionServiceTest {
     @Test
     @DisplayName("Retorna uma exceção ao não encontrar a sala pelo id")
     fun `returns an exception when not finding the room by id`() {
+        every { repository.findByMovieId(any()) } returns mutableListOf(fakeEntity)
         every { movieRepository.findById(any()) } returns Optional.of(movieEntity)
         every { roomRepository.findById(any()) } throws EntityNotFoundException(
             "A sala com id ${request.idRoom} não foi encontrada."
@@ -139,6 +142,20 @@ class SessionServiceTest {
 
         verify(exactly = 1) { roomRepository.findById(any()) }
         assertEquals("A sala com id ${request.idRoom} não foi encontrada.", error.message)
+    }
+
+    @Test
+    @DisplayName("Retorna uma exceção ao salvar uma sessão com horário e sala repetidos")
+    fun `returns an exception when saving a session with a repeated time and room`() {
+        every { repository.findByMovieId(any()) } returns mutableListOf(fakeEntity)
+
+        val error = assertThrows<IllegalArgumentException> { service.save(request) }
+
+        verify(exactly = 1) { repository.findByMovieId(any()) }
+        assertEquals(
+            "m=save, msg=Já existe uma sessão salva na data e hora '${request.startTime}' " +
+                    "na sala '${roomEntity.roomName}'", error.message
+        )
     }
 
 }
