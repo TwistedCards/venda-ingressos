@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.mapper
 
+import com.example.venda_ingressos.controller.model.SessionModel
 import com.example.venda_ingressos.controller.request.SessionRequest
 import com.example.venda_ingressos.controller.response.SessionResponse
 import com.example.venda_ingressos.entities.MovieEntity
@@ -16,6 +17,15 @@ class SessionMapper {
             startTime = entity.startTime,
             roomName = entity.room.roomName,
             movieName = entity.movie.title
+        )
+    }
+
+    fun entityToModel(entity: SessionEntity): SessionModel {
+        return SessionModel(
+            id = entity.id,
+            startTime = entity.startTime,
+            room = entity.room,
+            movie = entity.movie
         )
     }
 

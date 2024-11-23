@@ -1,13 +1,14 @@
 package com.example.venda_ingressos.service
 
+import com.example.venda_ingressos.controller.model.SessionModel
 import com.example.venda_ingressos.controller.request.SessionRequest
-import com.example.venda_ingressos.controller.response.SeatResponse
 import com.example.venda_ingressos.controller.response.SessionResponse
-import com.example.venda_ingressos.entities.StatusEnum
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.exceptions.IllegalArgumentException
 import com.example.venda_ingressos.mapper.SessionMapper
-import com.example.venda_ingressos.repository.*
+import com.example.venda_ingressos.repository.MovieRepository
+import com.example.venda_ingressos.repository.RoomRepository
+import com.example.venda_ingressos.repository.SessionRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.util.*
@@ -46,5 +47,13 @@ class SessionService(
         val entity = mapper.requestToEntity(request, movieEntity, roomEntity)
 
         return mapper.entityToResponse(repository.save(entity))
+    }
+
+    fun getById(id: UUID): SessionModel {
+        val entity = repository.findById(id).orElseThrow {
+            throw EntityNotFoundException("m=getById, msg=Session com id $id não encontrado")
+        }
+
+        return mapper.entityToModel(entity)
     }
 }

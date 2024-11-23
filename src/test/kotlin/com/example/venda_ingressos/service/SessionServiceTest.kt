@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.service
 
+import com.example.venda_ingressos.controller.model.SessionModel
 import com.example.venda_ingressos.controller.request.SessionRequest
 import com.example.venda_ingressos.controller.response.SessionResponse
 import com.example.venda_ingressos.entities.CinemaEntity
@@ -47,6 +48,7 @@ class SessionServiceTest {
 
     private lateinit var request: SessionRequest
     private lateinit var response: SessionResponse
+    private lateinit var model: SessionModel
     private lateinit var fakeEntity: SessionEntity
     private lateinit var movieEntity: MovieEntity
     private lateinit var roomEntity: RoomEntity
@@ -91,6 +93,13 @@ class SessionServiceTest {
             startTime = LocalDateTime.now(),
             movieName = "A caveira que sangrava",
             roomName = "5B"
+        )
+
+        model = SessionModel(
+            id = UUID.fromString("205847e8-7c73-4257-8d5f-9b2c61f9838b"),
+            startTime = LocalDateTime.parse("2019-03-27T10:15:30"),
+            movie = movieEntity,
+            room = roomEntity
         )
     }
 
@@ -156,6 +165,34 @@ class SessionServiceTest {
             "m=save, msg=Já existe uma sessão salva na data e hora '${request.startTime}' " +
                     "na sala '${roomEntity.roomName}'", error.message
         )
+    }
+
+    @Test
+    @DisplayName("Buscando sessão pelo id")
+    fun `get session by id`() {
+        every { repository.findById(any()) } returns Optional.of(fakeEntity)
+        every { mapper.entityToModel(any()) } returns model
+
+        val sessionModel = service.getById(fakeEntity.id!!)
+
+        verify(exactly = 1) { repository.findById(any()) }
+        verify(exactly = 1) { mapper.entityToModel(any()) }
+
+        assertEquals(model, sessionModel)
+    }
+
+    @Test
+    @DisplayName("Retorna uma exception ao buscar um id que não existe")
+    fun `returns an exception when searching for an id that does not exist`() {
+        every { repository.findById(any()) } throws EntityNotFoundException(
+            "m=getById, msg=Session com id ${fakeEntity.id} não encontrado"
+        )
+
+        val error = assertThrows<EntityNotFoundException> { service.getById(fakeEntity.id!!) }
+
+        verify(exactly = 1) { repository.findById(any()) }
+
+        assertEquals("m=getById, msg=Session com id ${fakeEntity.id} não encontrado", error.message)
     }
 
 }
