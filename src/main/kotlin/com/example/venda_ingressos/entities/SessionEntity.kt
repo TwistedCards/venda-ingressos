@@ -20,9 +20,6 @@ class SessionEntity(
     @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
     var seatSessions: MutableList<SeatSessionEntity>? = null,
 
-    @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
-    var buySeatSessions: MutableList<BuySeatSessionEntity>? = null,
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
     var room: RoomEntity

@@ -6,8 +6,7 @@ import java.util.*
 
 class MovieResponse(
     val id: UUID? = null,
-    val title: String,
-    val originalTitle: String,
+    val name: String,
     val indicativeClassification: String? = null,
     var duration: String,
     val releaseDate: LocalDate,

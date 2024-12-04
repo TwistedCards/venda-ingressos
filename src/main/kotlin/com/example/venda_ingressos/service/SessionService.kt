@@ -3,11 +3,14 @@ package com.example.venda_ingressos.service
 import com.example.venda_ingressos.controller.model.SessionModel
 import com.example.venda_ingressos.controller.request.SessionRequest
 import com.example.venda_ingressos.controller.response.SessionResponse
+import com.example.venda_ingressos.entities.SeatSessionEntity
+import com.example.venda_ingressos.entities.StatusEnum
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.exceptions.IllegalArgumentException
 import com.example.venda_ingressos.mapper.SessionMapper
 import com.example.venda_ingressos.repository.MovieRepository
 import com.example.venda_ingressos.repository.RoomRepository
+import com.example.venda_ingressos.repository.SeatSessionRepository
 import com.example.venda_ingressos.repository.SessionRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -18,7 +21,9 @@ class SessionService(
     private val repository: SessionRepository,
     private val movieRepository: MovieRepository,
     private val roomRepository: RoomRepository,
-    private val mapper: SessionMapper
+    private val mapper: SessionMapper,
+    private val seatService: SeatService,
+    private val seatSessionService: SeatSessionService
 ) {
 
     fun save(request: SessionRequest): SessionResponse {
@@ -45,6 +50,10 @@ class SessionService(
         }
 
         val entity = mapper.requestToEntity(request, movieEntity, roomEntity)
+
+        val listSeat = seatService.findSeatByRoomId(request.idRoom)
+
+        seatSessionService.save(listSeat, entity)
 
         return mapper.entityToResponse(repository.save(entity))
     }

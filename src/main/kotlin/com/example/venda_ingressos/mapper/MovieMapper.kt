@@ -11,8 +11,7 @@ class MovieMapper {
     fun entityToResponse(entity: MovieEntity): MovieResponse {
         return MovieResponse(
             id = entity.id!!,
-            title = entity.title,
-            originalTitle = entity.originalTitle,
+            name = entity.name,
             indicativeClassification = entity.indicativeClassification,
             duration = entity.duration,
             releaseDate = entity.releaseDate,
@@ -22,8 +21,7 @@ class MovieMapper {
 
     fun requestToEntity(request: MovieRequest): MovieEntity {
         return MovieEntity(
-            title = request.title,
-            originalTitle = request.originalTitle,
+            name = request.name,
             indicativeClassification = request.indicativeClassification,
             releaseDate = request.releaseDate,
             synopsis = request.synopsis,

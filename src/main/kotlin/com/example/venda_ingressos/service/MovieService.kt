@@ -30,7 +30,7 @@ class MovieService(
             return mapper.entityToResponse(entity)
         } catch (e: DataIntegrityViolationException){
             throw DataIntegrityViolationExceptionLocal(
-                "m:save, msg:O titulo '${request.title}' já existe na base."
+                "m:save, msg:O nome '${request.name}' já existe na base."
             )
         }
 

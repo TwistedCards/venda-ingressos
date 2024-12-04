@@ -11,12 +11,12 @@ INSERT INTO ROOM
 VALUES('8b295545-a37c-431c-901b-fc10c26ae1f0', 100, '3B', '4497ec6f-ba6c-426b-a34d-a24f92cb5ca4');
 
 INSERT INTO MOVIE
-(id, title, original_title, indicative_classification, duration, release_date, synopsis)
-VALUES('03b12386-aa5f-4308-b66e-dad5a683accd', 'Harry Potter', 'Harry Potter', 14, '2h5m', DATEADD('DAY', -90, CURRENT_TIMESTAMP), 'bla bla bla');
+(id, name, indicative_classification, duration, release_date, synopsis)
+VALUES('03b12386-aa5f-4308-b66e-dad5a683accd', 'Harry Potter', 14, '2h5m', DATEADD('DAY', -90, CURRENT_TIMESTAMP), 'bla bla bla');
 
 INSERT INTO SEAT
-(id, cod_seat, category, movie_id)
-VALUES('db9deab5-606b-4f55-a510-3c58efcb85dd', 'H12', 'VIP', '03b12386-aa5f-4308-b66e-dad5a683accd');
+(id, cod_seat, category, room_id)
+VALUES('db9deab5-606b-4f55-a510-3c58efcb85dd', 'H12', 'VIP', '8b295545-a37c-431c-901b-fc10c26ae1f0');
 
 INSERT INTO SESSION
 (id, start_time, movie_id, room_id)

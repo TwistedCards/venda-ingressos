@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import java.time.LocalDate
 
 class MovieRequest(
-    val title: String,
-    val originalTitle: String,
+    val name: String,
     val indicativeClassification: String,
     @JsonFormat(pattern = "dd/MM/yyyy")
     val releaseDate: LocalDate,

@@ -21,5 +21,8 @@ data class SeatSessionEntity(
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "session_id", nullable = false)
-    var session: SessionEntity
+    var session: SessionEntity,
+
+    @OneToMany(mappedBy = "seatSession", fetch = FetchType.LAZY)
+    var buySeatSessions: MutableList<BuySeatSessionEntity>? = null
 )

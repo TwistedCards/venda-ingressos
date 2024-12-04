@@ -16,7 +16,7 @@ class SessionMapper {
         return SessionResponse(
             startTime = entity.startTime,
             roomName = entity.room.roomName,
-            movieName = entity.movie.title
+            movieName = entity.movie.name
         )
     }
 

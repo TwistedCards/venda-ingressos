@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.math.BigDecimal
 import java.util.*
@@ -19,11 +20,8 @@ data class BuySeatSessionEntity(
     @JoinColumn(name = "buy_id", nullable = false)
     var buy: BuyEntity,
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seat_id", nullable = false)
-    var seat: SeatEntity,
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "session_id", nullable = false)
-    var session: SessionEntity
+    @JoinColumn(name = "seat_session_id", nullable = false)
+    var seatSession: SeatSessionEntity
 )

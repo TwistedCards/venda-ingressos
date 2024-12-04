@@ -11,12 +11,9 @@ data class MovieEntity(
     var id: UUID? = null,
 
     @Column(unique = true)
-    var title: String,
+    var name: String,
 
-    @Column(name="original_title")
-    var originalTitle: String,
-
-    @Column(name="indicative_classification")
+    @Column(name = "indicative_classification")
     var indicativeClassification: String? = null,
 
     var duration: String,
@@ -28,8 +25,5 @@ data class MovieEntity(
     var synopsis: String,
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-    var sessions: MutableList<SessionEntity>? = null,
-
-    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-    var seats: MutableList<SeatEntity>? = null
+    var sessions: MutableList<SessionEntity>? = null
 )

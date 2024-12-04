@@ -1,10 +1,14 @@
 package com.example.venda_ingressos.service
 
 import com.example.venda_ingressos.controller.response.SeatResponse
+import com.example.venda_ingressos.entities.CategoryEnum
+import com.example.venda_ingressos.entities.RoomEntity
+import com.example.venda_ingressos.entities.SeatEntity
 import com.example.venda_ingressos.entities.StatusEnum
 import com.example.venda_ingressos.exceptions.IllegalArgumentException
 import com.example.venda_ingressos.repository.SeatRepository
 import com.example.venda_ingressos.repository.SeatSessionRepository
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -39,4 +43,28 @@ class SeatService(
 
         return listSeatResponse
     }
+
+    @Transactional
+    fun save(qtdSeat: Int, roomEntity: RoomEntity) {
+        var i = 0
+
+        while (i < qtdSeat) {
+            val rand = ('A'..'Z').random()
+
+            val entity = SeatEntity(
+                codSeat = "$i" + rand,
+                category = CategoryEnum.NORMAL,
+                room = roomEntity
+            )
+
+            repository.save(entity)
+
+            i++
+        }
+    }
+
+    fun findSeatByRoomId(roomId: UUID): MutableList<SeatEntity> {
+        return repository.findByRoomId(roomId)
+    }
+
 }
