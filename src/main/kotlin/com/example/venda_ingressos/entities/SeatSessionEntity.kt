@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.entities
 
+import com.example.venda_ingressos.enums.StatusEnum
 import jakarta.persistence.*
 import java.util.*
 

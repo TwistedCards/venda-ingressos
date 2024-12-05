@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.entities
 
+import com.example.venda_ingressos.enums.CategoryEnum
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.util.*
