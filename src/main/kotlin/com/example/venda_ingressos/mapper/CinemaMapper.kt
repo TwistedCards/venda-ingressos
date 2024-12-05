@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.mapper
 
+import com.example.venda_ingressos.controller.model.CinemaModel
 import com.example.venda_ingressos.controller.request.CinemaRequest
 import com.example.venda_ingressos.controller.response.CinemaResponse
 import com.example.venda_ingressos.controller.response.RoomResponse
@@ -29,6 +30,10 @@ class CinemaMapper {
             name = request.name,
             phone = request.phone
         )
+    }
+
+    fun entityToListModel(entity: MutableList<CinemaEntity>): List<CinemaModel> {
+        return entity.map { CinemaModel(id = it.id, name = it.name, phone = it.phone) }
     }
 
 }

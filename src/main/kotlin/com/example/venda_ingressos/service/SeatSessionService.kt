@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service
 class SeatSessionService(
     private val repository: SeatSessionRepository
 ) {
-
     fun save(listSeat: MutableList<SeatEntity>, sessionEntity: SessionEntity) {
         listSeat.forEach {
             repository.save(

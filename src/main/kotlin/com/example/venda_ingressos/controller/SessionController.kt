@@ -31,9 +31,4 @@ class SessionController(
         return ResponseEntity.status(HttpStatus.OK).body(service.getById(id))
     }
 
-    @GetMapping("/teste/{id}")
-    fun teste(@PathVariable id: UUID): ResponseEntity<SessionEntity>{
-        return ResponseEntity.status(HttpStatus.OK).body(service.getSeatSession(id))
-    }
-
 }

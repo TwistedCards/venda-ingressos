@@ -3,15 +3,11 @@ package com.example.venda_ingressos.service
 import com.example.venda_ingressos.controller.model.SessionModel
 import com.example.venda_ingressos.controller.request.SessionRequest
 import com.example.venda_ingressos.controller.response.SessionResponse
-import com.example.venda_ingressos.entities.SeatSessionEntity
-import com.example.venda_ingressos.entities.SessionEntity
-import com.example.venda_ingressos.entities.StatusEnum
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.exceptions.IllegalArgumentException
 import com.example.venda_ingressos.mapper.SessionMapper
 import com.example.venda_ingressos.repository.MovieRepository
 import com.example.venda_ingressos.repository.RoomRepository
-import com.example.venda_ingressos.repository.SeatSessionRepository
 import com.example.venda_ingressos.repository.SessionRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -33,21 +29,22 @@ class SessionService(
         if (!listEntity.isNullOrEmpty()) {
             listEntity.forEach {
                 val date = LocalDateTime.parse(request.startTime)
+
                 if (it.startTime == date && it.room.id == request.idRoom) {
                     throw IllegalArgumentException(
-                        "m=save, msg=Já existe uma sessão salva na data e hora '$date' " +
-                                "na sala '${it.room.roomName}'"
+                        "m=save, msg=There is already a session saved at the date and time '$date' " +
+                                "in the room '${it.room.roomName}'"
                     )
                 }
             }
         }
 
         val movieEntity = movieRepository.findById(request.idMovie).orElseThrow {
-            EntityNotFoundException("O filme com id ${request.idMovie} não foi encontrado.")
+            EntityNotFoundException("m=save, msg=the movie with id ${request.idMovie} is not found.")
         }
 
         val roomEntity = roomRepository.findById(request.idRoom).orElseThrow {
-            EntityNotFoundException("A sala com id ${request.idRoom} não foi encontrada.")
+            EntityNotFoundException("m=save, msg=the movie with id ${request.idRoom} is not found.")
         }
 
         val entity = mapper.requestToEntity(request, movieEntity, roomEntity)
@@ -61,22 +58,10 @@ class SessionService(
 
     fun getById(id: UUID): SessionModel {
         val entity = repository.findById(id).orElseThrow {
-            throw EntityNotFoundException("m=getById, msg=Session com id $id não encontrado")
+            throw EntityNotFoundException("m=getById, msg=Session with id $id is not found.")
         }
 
         return mapper.entityToModel(entity)
     }
 
-    fun getSeatSession(id: UUID): SessionEntity {
-        val teste = repository.findById(id).get()
-
-        println("$teste")
-        println("SIZE: ${teste.seatSessions?.size}")
-
-        teste.seatSessions!!.forEach {
-            println(it.toString())
-        }
-
-        return teste
-    }
 }

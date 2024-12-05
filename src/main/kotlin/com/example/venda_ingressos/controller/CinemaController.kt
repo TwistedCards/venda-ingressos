@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.controller
 
+import com.example.venda_ingressos.controller.model.CinemaModel
 import com.example.venda_ingressos.controller.request.CinemaRequest
 import com.example.venda_ingressos.controller.request.ClientRequest
 import com.example.venda_ingressos.controller.request.paged.PagedRequest
@@ -27,6 +28,11 @@ class CinemaController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: UUID) {
         service.delete(id)
+    }
+
+    @GetMapping
+    fun getAll(): ResponseEntity<List<CinemaModel>>{
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAll())
     }
 
 }

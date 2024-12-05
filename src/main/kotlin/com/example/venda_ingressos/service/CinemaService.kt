@@ -1,15 +1,15 @@
 package com.example.venda_ingressos.service
 
+import com.example.venda_ingressos.controller.model.CinemaModel
 import com.example.venda_ingressos.controller.request.CinemaRequest
 import com.example.venda_ingressos.controller.response.CinemaResponse
 import com.example.venda_ingressos.entities.CinemaEntity
-import com.example.venda_ingressos.exceptions.DataIntegrityViolationException as DataIntegrityViolationExceptionLocal
 import com.example.venda_ingressos.mapper.CinemaMapper
 import com.example.venda_ingressos.repository.CinemaRepository
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
-//import java.sql.SQLIntegrityConstraintViolationException
 import java.util.*
+import com.example.venda_ingressos.exceptions.DataIntegrityViolationException as DataIntegrityViolationExceptionLocal
 
 @Service
 class CinemaService(
@@ -33,5 +33,9 @@ class CinemaService(
 
     fun delete(id: UUID) {
         repository.deleteById(id)
+    }
+
+    fun getAll(): List<CinemaModel> {
+        return mapper.entityToListModel(repository.findAll())
     }
 }
