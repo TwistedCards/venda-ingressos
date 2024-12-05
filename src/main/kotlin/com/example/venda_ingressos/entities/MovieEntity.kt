@@ -1,11 +1,12 @@
 package com.example.venda_ingressos.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.time.LocalDate
 import java.util.*
 
 @Entity(name = "Movie")
-data class MovieEntity(
+class MovieEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
@@ -24,6 +25,7 @@ data class MovieEntity(
     @Lob
     var synopsis: String,
 
+    @JsonIgnore
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
     var sessions: MutableList<SessionEntity>? = null
 )

@@ -4,6 +4,7 @@ import com.example.venda_ingressos.controller.model.SessionModel
 import com.example.venda_ingressos.controller.request.SessionRequest
 import com.example.venda_ingressos.controller.response.SessionResponse
 import com.example.venda_ingressos.entities.SeatSessionEntity
+import com.example.venda_ingressos.entities.SessionEntity
 import com.example.venda_ingressos.entities.StatusEnum
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.exceptions.IllegalArgumentException
@@ -50,12 +51,12 @@ class SessionService(
         }
 
         val entity = mapper.requestToEntity(request, movieEntity, roomEntity)
-
         val listSeat = seatService.findSeatByRoomId(request.idRoom)
+        val response = mapper.entityToResponse(repository.save(entity))
 
         seatSessionService.save(listSeat, entity)
 
-        return mapper.entityToResponse(repository.save(entity))
+        return response
     }
 
     fun getById(id: UUID): SessionModel {
@@ -64,5 +65,18 @@ class SessionService(
         }
 
         return mapper.entityToModel(entity)
+    }
+
+    fun getSeatSession(id: UUID): SessionEntity {
+        val teste = repository.findById(id).get()
+
+        println("$teste")
+        println("SIZE: ${teste.seatSessions?.size}")
+
+        teste.seatSessions!!.forEach {
+            println(it.toString())
+        }
+
+        return teste
     }
 }

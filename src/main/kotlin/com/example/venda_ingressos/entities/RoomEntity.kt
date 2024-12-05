@@ -23,8 +23,4 @@ class RoomEntity(
     @JsonIgnore
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     var sessions: MutableList<SessionEntity>? = null
-
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-//    var seats: MutableList<SeatEntity>? = null
 )

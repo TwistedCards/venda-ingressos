@@ -5,7 +5,7 @@ import jakarta.persistence.*
 import java.util.*
 
 @Entity(name = "Seat_Session")
-data class SeatSessionEntity(
+class SeatSessionEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
@@ -13,12 +13,12 @@ data class SeatSessionEntity(
     @Enumerated(EnumType.STRING)
     var status: StatusEnum,
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id", nullable = false)
     var seat: SeatEntity,
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "session_id", nullable = false)
     var session: SessionEntity,

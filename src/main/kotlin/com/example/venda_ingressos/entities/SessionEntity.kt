@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.time.LocalDateTime
 import java.util.*
@@ -17,6 +18,7 @@ class SessionEntity(
     @JoinColumn(name = "movie_id", nullable = false)
     var movie: MovieEntity,
 
+    @JsonIgnore
     @OneToMany(mappedBy = "session", fetch = FetchType.LAZY)
     var seatSessions: MutableList<SeatSessionEntity>? = null,
 

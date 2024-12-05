@@ -6,7 +6,7 @@ import java.math.BigDecimal
 import java.util.*
 
 @Entity(name = "Buy_Seat_Session")
-data class BuySeatSessionEntity(
+class BuySeatSessionEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,

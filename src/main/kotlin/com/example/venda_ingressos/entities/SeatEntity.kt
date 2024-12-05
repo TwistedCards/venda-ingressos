@@ -1,10 +1,11 @@
 package com.example.venda_ingressos.entities
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.util.*
 
 @Entity(name = "Seat")
-data class SeatEntity(
+class SeatEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: UUID? = null,
@@ -15,6 +16,7 @@ data class SeatEntity(
     @Enumerated(EnumType.STRING)
     var category: CategoryEnum,
 
+    @JsonIgnore
     @OneToMany(mappedBy = "seat", fetch = FetchType.LAZY)
     var seatSessions: MutableList<SeatSessionEntity>? = null,
 

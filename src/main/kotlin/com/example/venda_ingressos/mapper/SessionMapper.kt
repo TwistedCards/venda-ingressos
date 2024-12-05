@@ -14,6 +14,7 @@ class SessionMapper {
 
     fun entityToResponse(entity: SessionEntity): SessionResponse {
         return SessionResponse(
+            id = entity.id,
             startTime = entity.startTime,
             roomName = entity.room.roomName,
             movieName = entity.movie.name

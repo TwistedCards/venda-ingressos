@@ -3,10 +3,12 @@ package com.example.venda_ingressos.controller
 import com.example.venda_ingressos.controller.model.SessionModel
 import com.example.venda_ingressos.controller.request.SessionRequest
 import com.example.venda_ingressos.controller.response.SessionResponse
+import com.example.venda_ingressos.entities.SessionEntity
 import com.example.venda_ingressos.service.SessionService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -27,6 +29,11 @@ class SessionController(
     @GetMapping("/{id}")
     fun getById(id: UUID): ResponseEntity<SessionModel>{
         return ResponseEntity.status(HttpStatus.OK).body(service.getById(id))
+    }
+
+    @GetMapping("/teste/{id}")
+    fun teste(@PathVariable id: UUID): ResponseEntity<SessionEntity>{
+        return ResponseEntity.status(HttpStatus.OK).body(service.getSeatSession(id))
     }
 
 }
