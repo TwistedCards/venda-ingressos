@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.services
 
+import com.example.venda_ingressos.controllers.models.RoomModel
 import com.example.venda_ingressos.controllers.requests.RoomRequest
 import com.example.venda_ingressos.controllers.responses.RoomResponse
 import com.example.venda_ingressos.entities.RoomEntity
@@ -38,5 +39,15 @@ class RoomService(
     fun delete(id: UUID) {
         repository.deleteById(id)
     }
+
+    fun getAll(): List<RoomModel> {
+        return mapper.listEntityToListResponse(repository.findAll())
+    }
+
+//    fun getAll(): List<RoomModel> {
+//        val entity = repository.findAll()
+//
+//        return mapper.entityToResponse(entity)
+//    }
 
 }

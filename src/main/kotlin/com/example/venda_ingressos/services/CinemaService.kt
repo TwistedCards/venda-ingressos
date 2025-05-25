@@ -4,6 +4,7 @@ import com.example.venda_ingressos.controllers.models.CinemaModel
 import com.example.venda_ingressos.controllers.requests.CinemaRequest
 import com.example.venda_ingressos.controllers.responses.CinemaResponse
 import com.example.venda_ingressos.entities.CinemaEntity
+import com.example.venda_ingressos.exceptions.IllegalArgumentException
 import com.example.venda_ingressos.mappers.CinemaMapper
 import com.example.venda_ingressos.repositorys.CinemaRepository
 import org.springframework.dao.DataIntegrityViolationException
@@ -22,11 +23,20 @@ class CinemaService(
 
     fun save(request: CinemaRequest): CinemaResponse {
         try {
+
+            if(request.name.isEmpty()){
+                throw IllegalArgumentException("m:save, msg:Name is obligatory")
+            }
+
+            if(request.phone.isEmpty()){
+                throw IllegalArgumentException("m:save, msg:Phone is obligatory")
+            }
+
             val entitySave = repository.save(mapper.requestToEntity(request))
             return mapper.entityToResponse(entitySave)
         } catch (e: DataIntegrityViolationException) {
             throw DataIntegrityViolationExceptionLocal(
-                "m:save, msg:O telefone '${request.phone}' já existe na base."
+                "m:save, msg:The phone ${request.phone}' already exists on the base"
             )
         }
     }

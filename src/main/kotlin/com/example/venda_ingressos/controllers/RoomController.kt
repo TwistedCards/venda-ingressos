@@ -1,5 +1,6 @@
 package com.example.venda_ingressos.controllers
 
+import com.example.venda_ingressos.controllers.models.RoomModel
 import com.example.venda_ingressos.controllers.requests.RoomRequest
 import com.example.venda_ingressos.controllers.responses.RoomResponse
 import com.example.venda_ingressos.entities.RoomEntity
@@ -29,6 +30,11 @@ class RoomController(
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): RoomEntity {
         return service.findById(id)
+    }
+
+    @GetMapping
+    fun getAll(): ResponseEntity<List<RoomModel>> {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAll())
     }
 
 }
