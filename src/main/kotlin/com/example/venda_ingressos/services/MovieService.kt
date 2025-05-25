@@ -20,7 +20,7 @@ class MovieService(
 ) {
 
     fun findById(id: UUID): MovieEntity {
-        return repository.findById(id).orElseThrow { EntityNotFoundException("O filme com id $id não foi encontrado") }
+        return repository.findById(id).orElseThrow { EntityNotFoundException("m=findById, msg=The movie with id '$id' is not found.") }
     }
 
     fun save(request: MovieRequest): MovieResponse {
@@ -30,7 +30,7 @@ class MovieService(
             return mapper.entityToResponse(entity)
         } catch (e: DataIntegrityViolationException){
             throw DataIntegrityViolationExceptionLocal(
-                "m:save, msg:O nome '${request.name}' já existe na base."
+                "m=save, msg=The name '${request.name}' already exist in the base."
             )
         }
 

@@ -8,4 +8,6 @@ interface SessionRepository : JpaRepository<SessionEntity, UUID> {
 
     fun findByMovieId(id: UUID): List<SessionEntity>? = null
 
+    fun findByRoomId(id: UUID): MutableList<SessionEntity>
+
 }

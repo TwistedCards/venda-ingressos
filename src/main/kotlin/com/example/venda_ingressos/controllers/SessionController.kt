@@ -6,11 +6,7 @@ import com.example.venda_ingressos.controllers.responses.SessionResponse
 import com.example.venda_ingressos.services.SessionService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -25,7 +21,7 @@ class SessionController(
     }
 
     @GetMapping("/{id}")
-    fun getById(id: UUID): ResponseEntity<SessionModel>{
+    fun getById(@PathVariable id: UUID): ResponseEntity<SessionModel>{
         return ResponseEntity.status(HttpStatus.OK).body(service.getById(id))
     }
 

@@ -5,7 +5,7 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 import java.util.*
 
-@Entity(name = "Session")
+@Entity(name = "Session1")
 class SessionEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

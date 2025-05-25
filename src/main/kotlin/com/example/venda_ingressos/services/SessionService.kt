@@ -3,6 +3,8 @@ package com.example.venda_ingressos.services
 import com.example.venda_ingressos.controllers.models.SessionModel
 import com.example.venda_ingressos.controllers.requests.SessionRequest
 import com.example.venda_ingressos.controllers.responses.SessionResponse
+import com.example.venda_ingressos.entities.SeatEntity
+import com.example.venda_ingressos.entities.SessionEntity
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
 import com.example.venda_ingressos.exceptions.IllegalArgumentException
 import com.example.venda_ingressos.mappers.SessionMapper
@@ -19,7 +21,6 @@ class SessionService(
     private val movieRepository: MovieRepository,
     private val roomRepository: RoomRepository,
     private val mapper: SessionMapper,
-    private val seatService: SeatService,
     private val seatSessionService: SeatSessionService
 ) {
 
@@ -48,10 +49,10 @@ class SessionService(
         }
 
         val entity = mapper.requestToEntity(request, movieEntity, roomEntity)
-        val listSeat = seatService.findSeatByRoomId(request.idRoom)
-        val response = mapper.entityToResponse(repository.save(entity))
+        val finalEntity = repository.save(entity)
+        val response = mapper.entityToResponse(finalEntity)
 
-        seatSessionService.save(listSeat, entity)
+        seatSessionService.save(sessionEntity = finalEntity)
 
         return response
     }
@@ -62,6 +63,10 @@ class SessionService(
         }
 
         return mapper.entityToModel(entity)
+    }
+
+    fun findSessionByRoomId(roomId: UUID): MutableList<SessionEntity> {
+        return repository.findByRoomId(roomId)
     }
 
 }

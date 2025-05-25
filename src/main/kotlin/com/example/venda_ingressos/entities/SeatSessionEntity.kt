@@ -14,12 +14,12 @@ class SeatSessionEntity(
     var status: StatusEnum,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seat_id", nullable = false)
-    var seat: SeatEntity,
+    @JoinColumn(name = "seat_id", nullable = true)
+    var seat: SeatEntity? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "session_id", nullable = false)
-    var session: SessionEntity,
+    @JoinColumn(name = "session_id", nullable = true)
+    var session: SessionEntity? = null,
 
     @OneToMany(mappedBy = "seatSession", fetch = FetchType.LAZY)
     var buySeatSessions: MutableList<BuySeatSessionEntity>? = null

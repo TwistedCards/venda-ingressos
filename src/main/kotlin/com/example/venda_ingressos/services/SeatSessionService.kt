@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service
 class SeatSessionService(
     private val repository: SeatSessionRepository
 ) {
-    fun save(listSeat: MutableList<SeatEntity>, sessionEntity: SessionEntity) {
-        listSeat.forEach {
-            repository.save(
-                SeatSessionEntity(
-                    status = StatusEnum.FREE,
-                    seat = it,
-                    session = sessionEntity
-                )
+
+    fun save(seatEntity: SeatEntity? = null, sessionEntity: SessionEntity? = null) {
+        repository.saveAndFlush(
+            SeatSessionEntity(
+                status = StatusEnum.FREE,
+                seat = seatEntity,
+                session = sessionEntity
             )
-        }
+        )
     }
+
 }

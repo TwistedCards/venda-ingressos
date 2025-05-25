@@ -5,6 +5,7 @@ import com.example.venda_ingressos.controllers.requests.RoomRequest
 import com.example.venda_ingressos.controllers.responses.RoomResponse
 import com.example.venda_ingressos.entities.RoomEntity
 import com.example.venda_ingressos.exceptions.EntityNotFoundException
+import com.example.venda_ingressos.exceptions.IllegalArgumentException
 import com.example.venda_ingressos.mappers.RoomMapper
 import com.example.venda_ingressos.repositorys.CinemaRepository
 import com.example.venda_ingressos.repositorys.RoomRepository
@@ -28,6 +29,10 @@ class RoomService(
     fun save(request: RoomRequest): RoomResponse {
         val entityCinema = cinemaRepository.findById(request.idCinema)
             .orElseThrow { throw EntityNotFoundException("m=save, msg=Cinema with id ${request.idCinema} not found") }
+
+        if(request.totalCapacity == 0){
+            throw IllegalArgumentException("m: save, msg: Total capacity need be more than 0.")
+        }
 
         val roomEntity = repository.save(mapper.requestToEntity(request, entityCinema))
 
