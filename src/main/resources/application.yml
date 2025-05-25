@@ -23,7 +23,7 @@ spring:
     password: adm
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
+    show-sql: false
     defer-datasource-initialization: true
   h2:
     console:

@@ -8,4 +8,5 @@ class VendaIngressosApplication
 
 fun main(args: Array<String>) {
 	runApplication<VendaIngressosApplication>(*args)
+	println("System up")
 }
