@@ -41,6 +41,11 @@ class ClientController(
         return ResponseEntity.status(HttpStatus.OK).body(service.edit(request))
     }
 
+    @PutMapping("/editSpecifParts")
+    fun editSpecificPartsOfClient(@RequestBody request: ClientRequest): ResponseEntity<ClientResponse> {
+        return ResponseEntity.status(HttpStatus.OK).body(service.editSomeData(request))
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@RequestParam id: UUID) {

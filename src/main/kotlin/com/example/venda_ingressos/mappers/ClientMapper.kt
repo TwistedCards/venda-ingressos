@@ -18,7 +18,7 @@ class ClientMapper {
 
     fun requestToEntity(request: ClientRequest): ClientEntity {
         return ClientEntity(
-            name = request.name,
+            name = request.name!!,
             cpf = request.cpf
         )
     }
